@@ -1,0 +1,13 @@
+# Python requirements for UART sender scripts
+# 
+# This file contains the external dependencies needed to run the UART sender scripts:
+# - uart_sender.py: Command-line UART message sender
+# - uart_sender_gui.py: GUI-based UART message sender
+
+# To use, run: pip install -r uart_sender_python_requirements.txt
+
+# Serial communication library
+pyserial>=3.5
+
+# Note: tkinter is used in uart_sender_gui.py but it's part of Python's standard library
+# and doesn't need to be installed separately

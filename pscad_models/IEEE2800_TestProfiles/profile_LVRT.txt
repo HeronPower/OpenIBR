@@ -1,0 +1,14 @@
+! This profile is for original LVRT test.  The 0.1 pu at end intentionally tests protection tripping
+-100 			1
+0.0 			1
+0.0001 			0
+0.15 			0
+1.75 			0.9	
+10.0 			0.9
+10.0001 		0.98
+18.0 			0.98
+18.0001 		0.10
+24.0 			0.10
+24.0001			1.00
+30.0			1.00
+ENDFILE:

@@ -1,0 +1,22 @@
+{
+  "folders": [
+    {
+      "path": ""
+    }
+  ],
+  "settings": {},
+  "launch": {
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "name": "target_setup",
+        "type": "ccs-debug",
+        "request": "launch",
+        "projectInfo": {
+          "name": "target_setup",
+          "resourceId": "/target_setup"
+        }
+      }
+    ]
+  }
+}

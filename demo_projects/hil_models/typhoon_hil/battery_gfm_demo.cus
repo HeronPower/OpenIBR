@@ -1,0 +1,669 @@
+<ui_settings>
+    <version>2.9</version>
+    <model_locked>False</model_locked>
+    <canvas_bg_color>#ffffff</canvas_bg_color>
+    <initialization_code><![CDATA[# NOTE: Variables and functions defined here will be
+# available for use in all Macro and Expression scripts.
+# NOTE: This code is always executed prior to simulation start.
+
+# The variable 'SETTINGS_DIR' holds the directory where the loaded Panel .cus file is located.
+# Also you can call the 'get_settings_dir_path()' function in any
+# Macro and Expression script to get the same directory.
+SETTINGS_DIR = get_settings_dir_path()
+
+# The 'add_to_python_path(folder)' function can be used to add a custom folder
+# with Python files and packages to the PYTHONPATH. After a folder is added, all Python
+# files and Python packages from it can be imported into the SCADA Namespace.
+
+# HIL API is imported as 'hil'
+# SCADA API is imported as 'panel'
+# SCADA API constants are imported as 'api_const'
+# Numpy module is imported as 'np'
+# Scipy module is imported as 'sp'
+# Schematic Editor model namespace is imported as 'scm'
+# Function for printing to the HIL SCADA Message log is imported as 'printf'.
+
+]]></initialization_code>
+    <components>
+        <component_data>
+                <id>c6af738f725411f0801c70089418d4a2</id>
+                <name><![CDATA[Capture/Scope]]></name>
+                <type>Capture/Scope</type>
+                <description><![CDATA[]]></description>
+                <working_mode>windowed</working_mode>
+                <widget_settings>
+                    <x>1064</x>
+                    <y>632</y>
+                    <width>120</width>
+                    <height>120</height>
+                    <hierarchy_position>1</hierarchy_position>
+                    <label><![CDATA[]]></label>
+                    <use_label>False</use_label>
+                    <appearance><![CDATA[Flat]]></appearance>
+                    <state>Scope</state>
+                    <layout>None</layout>
+                    <virtual_signals_definitions>
+                    </virtual_signals_definitions>
+                    <presets>
+                        <active_capture_preset><![CDATA[Default]]></active_capture_preset>
+                        <active_scope_preset><![CDATA[Default]]></active_scope_preset>
+                        <capture name="Default">
+                            <time_interval>0.01</time_interval>
+                            <sample_rate>1000000.0</sample_rate>
+                            <background_color>white</background_color>
+                            <layout>Vertical</layout>
+                            <legend>True</legend>
+                            <analog_signals>
+                                <analog>
+                                    <channel>0</channel>
+                                    <name><![CDATA[Va1]]></name>
+                                    <is_locked>False</is_locked>
+                                    <vertical_scale>Auto</vertical_scale>
+                                    <vertical_offset>0.0</vertical_offset>
+                                    <coupling>False</coupling>
+                                    <row>0</row>
+                                    <viewports>
+                                        <num_viewport>1</num_viewport>
+                                   </viewports>
+                               </analog>
+                                <analog>
+                                    <channel>1</channel>
+                                    <name><![CDATA[Va2]]></name>
+                                    <is_locked>False</is_locked>
+                                    <vertical_scale>Auto</vertical_scale>
+                                    <vertical_offset>0.0</vertical_offset>
+                                    <coupling>False</coupling>
+                                    <row>1</row>
+                                    <viewports>
+                                        <num_viewport>1</num_viewport>
+                                   </viewports>
+                               </analog>
+                                <analog>
+                                    <channel>2</channel>
+                                    <name><![CDATA[Va3]]></name>
+                                    <is_locked>False</is_locked>
+                                    <vertical_scale>Auto</vertical_scale>
+                                    <vertical_offset>0.0</vertical_offset>
+                                    <coupling>False</coupling>
+                                    <row>2</row>
+                                    <viewports>
+                                        <num_viewport>1</num_viewport>
+                                   </viewports>
+                               </analog>
+                            </analog_signals>
+                            <digital_signals>
+                                <digital>
+                                    <channel>0</channel>
+                                    <name><![CDATA[Three Phase Inverter1.Phase A.S1]]></name>
+                                    <is_locked>False</is_locked>
+                                    <vertical_offset>0.0</vertical_offset>
+                                    <row>3</row>
+                                    <viewports>
+                                        
+                                        <num_viewport>2</num_viewport>
+                                        
+                                   </viewports>
+                                </digital>
+                                <digital>
+                                    <channel>1</channel>
+                                    <name><![CDATA[Three Phase Inverter1.Phase B.S1]]></name>
+                                    <is_locked>False</is_locked>
+                                    <vertical_offset>0.0</vertical_offset>
+                                    <row>4</row>
+                                    <viewports>
+                                        
+                                        <num_viewport>2</num_viewport>
+                                        
+                                   </viewports>
+                                </digital>
+                                <digital>
+                                    <channel>2</channel>
+                                    <name><![CDATA[Three Phase Inverter1.Phase C.S1]]></name>
+                                    <is_locked>False</is_locked>
+                                    <vertical_offset>0.0</vertical_offset>
+                                    <row>5</row>
+                                    <viewports>
+                                        
+                                        <num_viewport>2</num_viewport>
+                                        
+                                   </viewports>
+                                </digital>
+                            </digital_signals>
+                            <virtual_signals>
+                            </virtual_signals>
+                            <trigger>
+                                <device>0</device>
+                                <is_force>True</is_force>
+                                <type>Analog</type>
+                                <source><![CDATA[Va1]]></source>
+                                <edge>Rising edge</edge>
+                                <treshold>0.0</treshold>
+                                <offset>0.0</offset>
+                                <useFirstTrigger>False</useFirstTrigger>
+                            </trigger>
+                            <plotting_settings>
+                                <subplots>
+                                    </subplots>
+                            </plotting_settings>
+                        </capture>
+                        <scope name="Default">
+                            <background_color>white</background_color>
+                            <layout>Grid</layout>
+                            <legend>True</legend>
+                            <show_viewports>5</show_viewports>
+                            <decimation>11</decimation>
+                            <time_base>0.005</time_base>
+                            <analog_signals>
+                                <analog>
+                                    <channel>0</channel>
+                                    <name><![CDATA[Va1]]></name>
+                                    <is_locked>False</is_locked>
+                                    <vertical_scale>200</vertical_scale>
+                                    <vertical_offset>0.0</vertical_offset>
+                                    <coupling>False</coupling>
+                                    <row>0</row>
+                                    <viewports>
+                                        <num_viewport>1</num_viewport>
+                                   </viewports>
+                               </analog>
+                                <analog>
+                                    <channel>1</channel>
+                                    <name><![CDATA[Va2]]></name>
+                                    <is_locked>False</is_locked>
+                                    <vertical_scale>200</vertical_scale>
+                                    <vertical_offset>0.0</vertical_offset>
+                                    <coupling>False</coupling>
+                                    <row>1</row>
+                                    <viewports>
+                                        <num_viewport>1</num_viewport>
+                                   </viewports>
+                               </analog>
+                                <analog>
+                                    <channel>2</channel>
+                                    <name><![CDATA[Va3]]></name>
+                                    <is_locked>False</is_locked>
+                                    <vertical_scale>200</vertical_scale>
+                                    <vertical_offset>0.0</vertical_offset>
+                                    <coupling>False</coupling>
+                                    <row>2</row>
+                                    <viewports>
+                                        <num_viewport>1</num_viewport>
+                                   </viewports>
+                               </analog>
+                                <analog>
+                                    <channel>3</channel>
+                                    <name><![CDATA[Ia1]]></name>
+                                    <is_locked>False</is_locked>
+                                    <vertical_scale>500</vertical_scale>
+                                    <vertical_offset>0.0</vertical_offset>
+                                    <coupling>False</coupling>
+                                    <row>3</row>
+                                    <viewports>
+                                        <num_viewport>3</num_viewport>
+                                   </viewports>
+                               </analog>
+                                <analog>
+                                    <channel>4</channel>
+                                    <name><![CDATA[Ia2]]></name>
+                                    <is_locked>False</is_locked>
+                                    <vertical_scale>500</vertical_scale>
+                                    <vertical_offset>0.0</vertical_offset>
+                                    <coupling>True</coupling>
+                                    <row>4</row>
+                                    <viewports>
+                                        <num_viewport>3</num_viewport>
+                                   </viewports>
+                               </analog>
+                                <analog>
+                                    <channel>5</channel>
+                                    <name><![CDATA[Ia3]]></name>
+                                    <is_locked>False</is_locked>
+                                    <vertical_scale>500</vertical_scale>
+                                    <vertical_offset>0.0</vertical_offset>
+                                    <coupling>False</coupling>
+                                    <row>5</row>
+                                    <viewports>
+                                        <num_viewport>3</num_viewport>
+                                   </viewports>
+                               </analog>
+                                <analog>
+                                    <channel>6</channel>
+                                    <name><![CDATA[Cdc]]></name>
+                                    <is_locked>False</is_locked>
+                                    <vertical_scale>1k</vertical_scale>
+                                    <vertical_offset>0.0</vertical_offset>
+                                    <coupling>False</coupling>
+                                    <row>6</row>
+                                    <viewports>
+                                        <num_viewport>2</num_viewport>
+                                   </viewports>
+                               </analog>
+                                <analog>
+                                    <channel>7</channel>
+                                    <name><![CDATA[Ia4]]></name>
+                                    <is_locked>False</is_locked>
+                                    <vertical_scale>500</vertical_scale>
+                                    <vertical_offset>0.0</vertical_offset>
+                                    <coupling>False</coupling>
+                                    <row>13</row>
+                                    <viewports>
+                                        <num_viewport>4</num_viewport>
+                                   </viewports>
+                               </analog>
+                                <analog>
+                                    <channel>8</channel>
+                                    <name><![CDATA[Ia5]]></name>
+                                    <is_locked>False</is_locked>
+                                    <vertical_scale>500</vertical_scale>
+                                    <vertical_offset>0.0</vertical_offset>
+                                    <coupling>False</coupling>
+                                    <row>14</row>
+                                    <viewports>
+                                        <num_viewport>4</num_viewport>
+                                   </viewports>
+                               </analog>
+                                <analog>
+                                    <channel>9</channel>
+                                    <name><![CDATA[Ia6]]></name>
+                                    <is_locked>False</is_locked>
+                                    <vertical_scale>500</vertical_scale>
+                                    <vertical_offset>0.0</vertical_offset>
+                                    <coupling>False</coupling>
+                                    <row>15</row>
+                                    <viewports>
+                                        <num_viewport>4</num_viewport>
+                                   </viewports>
+                               </analog>
+                            </analog_signals>
+                            <digital_signals>
+                                <digital>
+                                    <channel>0</channel>
+                                    <name><![CDATA[Three Phase Inverter1.Phase A.S1]]></name>
+                                    <is_locked>False</is_locked>
+                                    <vertical_offset>0.0</vertical_offset>
+                                    <row>7</row>
+                                    <viewports>
+                                        
+                                        <num_viewport>5</num_viewport>
+                                        
+                                   </viewports>
+                                </digital>
+                                <digital>
+                                    <channel>1</channel>
+                                    <name><![CDATA[Three Phase Inverter1.Phase B.S1]]></name>
+                                    <is_locked>False</is_locked>
+                                    <vertical_offset>0.0</vertical_offset>
+                                    <row>8</row>
+                                    <viewports>
+                                        
+                                        <num_viewport>5</num_viewport>
+                                        
+                                   </viewports>
+                                </digital>
+                                <digital>
+                                    <channel>2</channel>
+                                    <name><![CDATA[Three Phase Inverter1.Phase C.S1]]></name>
+                                    <is_locked>False</is_locked>
+                                    <vertical_offset>0.0</vertical_offset>
+                                    <row>9</row>
+                                    <viewports>
+                                        
+                                        <num_viewport>5</num_viewport>
+                                        
+                                   </viewports>
+                                </digital>
+                                <digital>
+                                    <channel>3</channel>
+                                    <name><![CDATA[Three Phase Inverter1.Phase A.S2]]></name>
+                                    <is_locked>False</is_locked>
+                                    <vertical_offset>0.0</vertical_offset>
+                                    <row>10</row>
+                                    <viewports>
+                                        
+                                        <num_viewport>5</num_viewport>
+                                        
+                                   </viewports>
+                                </digital>
+                                <digital>
+                                    <channel>4</channel>
+                                    <name><![CDATA[Three Phase Inverter1.Phase B.S2]]></name>
+                                    <is_locked>False</is_locked>
+                                    <vertical_offset>0.0</vertical_offset>
+                                    <row>11</row>
+                                    <viewports>
+                                        
+                                        <num_viewport>5</num_viewport>
+                                        
+                                   </viewports>
+                                </digital>
+                                <digital>
+                                    <channel>5</channel>
+                                    <name><![CDATA[Three Phase Inverter1.Phase C.S2]]></name>
+                                    <is_locked>False</is_locked>
+                                    <vertical_offset>0.0</vertical_offset>
+                                    <row>12</row>
+                                    <viewports>
+                                        
+                                        <num_viewport>5</num_viewport>
+                                        
+                                   </viewports>
+                                </digital>
+                            </digital_signals>
+                            <trigger>
+                                <device>0</device>
+                                <is_force>False</is_force>
+                                <type>Analog</type>
+                                <source>Va1</source>
+                                <edge>Rising edge</edge>
+                                <treshold>0.0</treshold>
+                                <offset>50.0</offset>
+                                <useFirstTrigger>False</useFirstTrigger>
+                            </trigger>
+                        </scope>
+                        </presets>
+                    <capture>
+                        <time_interval>0.01</time_interval>
+                        <sample_rate>1000000.0</sample_rate>
+                        <background_color>white</background_color>
+                        <layout>Vertical</layout>
+                        <legend>True</legend>
+                        <trigger>
+                            <type>Analog</type>
+                            <source>Va1</source>
+                            <edge>Rising edge</edge>
+                            <treshold>0.0</treshold>
+                            <offset>0.0</offset>
+                            <useFirstTrigger>False</useFirstTrigger>
+                        </trigger>
+                        <analog_signals>
+                            <analog>
+                                    <channel>0</channel>
+                                    <name><![CDATA[Va1]]></name>
+                                    <is_locked>False</is_locked>
+                                    <vertical_scale>Auto</vertical_scale>
+                                    <vertical_offset>0.0</vertical_offset>
+                                    <coupling>False</coupling>
+                                    <row>0</row>
+                                    <viewports>
+                                        <num_viewport>1</num_viewport>
+                                   </viewports>
+                               </analog>
+                            <analog>
+                                    <channel>1</channel>
+                                    <name><![CDATA[Va2]]></name>
+                                    <is_locked>False</is_locked>
+                                    <vertical_scale>Auto</vertical_scale>
+                                    <vertical_offset>0.0</vertical_offset>
+                                    <coupling>False</coupling>
+                                    <row>1</row>
+                                    <viewports>
+                                        <num_viewport>1</num_viewport>
+                                   </viewports>
+                               </analog>
+                            <analog>
+                                    <channel>2</channel>
+                                    <name><![CDATA[Va3]]></name>
+                                    <is_locked>False</is_locked>
+                                    <vertical_scale>Auto</vertical_scale>
+                                    <vertical_offset>0.0</vertical_offset>
+                                    <coupling>False</coupling>
+                                    <row>2</row>
+                                    <viewports>
+                                        <num_viewport>1</num_viewport>
+                                   </viewports>
+                               </analog>
+                        </analog_signals>
+                         <digital_signals>
+                            <digital>
+                                    <channel>0</channel>
+                                    <name><![CDATA[Three Phase Inverter1.Phase A.S1]]></name>
+                                    <is_locked>False</is_locked>
+                                    <vertical_offset>0.0</vertical_offset>
+                                    <row>3</row>
+                                    <viewports>
+                                        
+                                        <num_viewport>2</num_viewport>
+                                        
+                                   </viewports>
+                                </digital>
+                            <digital>
+                                    <channel>1</channel>
+                                    <name><![CDATA[Three Phase Inverter1.Phase B.S1]]></name>
+                                    <is_locked>False</is_locked>
+                                    <vertical_offset>0.0</vertical_offset>
+                                    <row>4</row>
+                                    <viewports>
+                                        
+                                        <num_viewport>2</num_viewport>
+                                        
+                                   </viewports>
+                                </digital>
+                            <digital>
+                                    <channel>2</channel>
+                                    <name><![CDATA[Three Phase Inverter1.Phase C.S1]]></name>
+                                    <is_locked>False</is_locked>
+                                    <vertical_offset>0.0</vertical_offset>
+                                    <row>5</row>
+                                    <viewports>
+                                        
+                                        <num_viewport>2</num_viewport>
+                                        
+                                   </viewports>
+                                </digital>
+                         </digital_signals>
+                    </capture>
+                    <scope>
+                        <time_base>0.005 </time_base>
+                        <background_color>white</background_color>
+                        <layout>Grid</layout>
+                        <legend>True</legend>
+                        <trigger>
+                            <mode>Auto</mode>
+                            <type>Analog</type>
+                            <source>Va1</source>
+                            <edge>Rising edge</edge>
+                            <treshold>0.0</treshold>
+                            <offset>50.0</offset>
+                        </trigger>
+                         <analog_signals>
+                            <analog>
+                                    <channel>0</channel>
+                                    <name><![CDATA[Va1]]></name>
+                                    <is_locked>False</is_locked>
+                                    <vertical_scale>200</vertical_scale>
+                                    <vertical_offset>0.0</vertical_offset>
+                                    <coupling>False</coupling>
+                                    <row>0</row>
+                                    <viewports>
+                                        <num_viewport>1</num_viewport>
+                                   </viewports>
+                               </analog>
+                            <analog>
+                                    <channel>1</channel>
+                                    <name><![CDATA[Va2]]></name>
+                                    <is_locked>False</is_locked>
+                                    <vertical_scale>200</vertical_scale>
+                                    <vertical_offset>0.0</vertical_offset>
+                                    <coupling>False</coupling>
+                                    <row>1</row>
+                                    <viewports>
+                                        <num_viewport>1</num_viewport>
+                                   </viewports>
+                               </analog>
+                            <analog>
+                                    <channel>2</channel>
+                                    <name><![CDATA[Va3]]></name>
+                                    <is_locked>False</is_locked>
+                                    <vertical_scale>200</vertical_scale>
+                                    <vertical_offset>0.0</vertical_offset>
+                                    <coupling>False</coupling>
+                                    <row>2</row>
+                                    <viewports>
+                                        <num_viewport>1</num_viewport>
+                                   </viewports>
+                               </analog>
+                            <analog>
+                                    <channel>3</channel>
+                                    <name><![CDATA[Ia1]]></name>
+                                    <is_locked>False</is_locked>
+                                    <vertical_scale>500</vertical_scale>
+                                    <vertical_offset>0.0</vertical_offset>
+                                    <coupling>False</coupling>
+                                    <row>3</row>
+                                    <viewports>
+                                        <num_viewport>3</num_viewport>
+                                   </viewports>
+                               </analog>
+                            <analog>
+                                    <channel>4</channel>
+                                    <name><![CDATA[Ia2]]></name>
+                                    <is_locked>False</is_locked>
+                                    <vertical_scale>500</vertical_scale>
+                                    <vertical_offset>0.0</vertical_offset>
+                                    <coupling>True</coupling>
+                                    <row>4</row>
+                                    <viewports>
+                                        <num_viewport>3</num_viewport>
+                                   </viewports>
+                               </analog>
+                            <analog>
+                                    <channel>5</channel>
+                                    <name><![CDATA[Ia3]]></name>
+                                    <is_locked>False</is_locked>
+                                    <vertical_scale>500</vertical_scale>
+                                    <vertical_offset>0.0</vertical_offset>
+                                    <coupling>False</coupling>
+                                    <row>5</row>
+                                    <viewports>
+                                        <num_viewport>3</num_viewport>
+                                   </viewports>
+                               </analog>
+                            <analog>
+                                    <channel>6</channel>
+                                    <name><![CDATA[Cdc]]></name>
+                                    <is_locked>False</is_locked>
+                                    <vertical_scale>1k</vertical_scale>
+                                    <vertical_offset>0.0</vertical_offset>
+                                    <coupling>False</coupling>
+                                    <row>6</row>
+                                    <viewports>
+                                        <num_viewport>2</num_viewport>
+                                   </viewports>
+                               </analog>
+                            <analog>
+                                    <channel>7</channel>
+                                    <name><![CDATA[Ia4]]></name>
+                                    <is_locked>False</is_locked>
+                                    <vertical_scale>500</vertical_scale>
+                                    <vertical_offset>0.0</vertical_offset>
+                                    <coupling>False</coupling>
+                                    <row>13</row>
+                                    <viewports>
+                                        <num_viewport>4</num_viewport>
+                                   </viewports>
+                               </analog>
+                            <analog>
+                                    <channel>8</channel>
+                                    <name><![CDATA[Ia5]]></name>
+                                    <is_locked>False</is_locked>
+                                    <vertical_scale>500</vertical_scale>
+                                    <vertical_offset>0.0</vertical_offset>
+                                    <coupling>False</coupling>
+                                    <row>14</row>
+                                    <viewports>
+                                        <num_viewport>4</num_viewport>
+                                   </viewports>
+                               </analog>
+                            <analog>
+                                    <channel>9</channel>
+                                    <name><![CDATA[Ia6]]></name>
+                                    <is_locked>False</is_locked>
+                                    <vertical_scale>500</vertical_scale>
+                                    <vertical_offset>0.0</vertical_offset>
+                                    <coupling>False</coupling>
+                                    <row>15</row>
+                                    <viewports>
+                                        <num_viewport>4</num_viewport>
+                                   </viewports>
+                               </analog>
+                        </analog_signals>
+                        <digital_signals>
+                            <digital>
+                                    <channel>0</channel>
+                                    <name><![CDATA[Three Phase Inverter1.Phase A.S1]]></name>
+                                    <is_locked>False</is_locked>
+                                    <vertical_offset>0.0</vertical_offset>
+                                    <row>7</row>
+                                    <viewports>
+                                        
+                                        <num_viewport>5</num_viewport>
+                                        
+                                   </viewports>
+                                </digital>
+                            <digital>
+                                    <channel>1</channel>
+                                    <name><![CDATA[Three Phase Inverter1.Phase B.S1]]></name>
+                                    <is_locked>False</is_locked>
+                                    <vertical_offset>0.0</vertical_offset>
+                                    <row>8</row>
+                                    <viewports>
+                                        
+                                        <num_viewport>5</num_viewport>
+                                        
+                                   </viewports>
+                                </digital>
+                            <digital>
+                                    <channel>2</channel>
+                                    <name><![CDATA[Three Phase Inverter1.Phase C.S1]]></name>
+                                    <is_locked>False</is_locked>
+                                    <vertical_offset>0.0</vertical_offset>
+                                    <row>9</row>
+                                    <viewports>
+                                        
+                                        <num_viewport>5</num_viewport>
+                                        
+                                   </viewports>
+                                </digital>
+                            <digital>
+                                    <channel>3</channel>
+                                    <name><![CDATA[Three Phase Inverter1.Phase A.S2]]></name>
+                                    <is_locked>False</is_locked>
+                                    <vertical_offset>0.0</vertical_offset>
+                                    <row>10</row>
+                                    <viewports>
+                                        
+                                        <num_viewport>5</num_viewport>
+                                        
+                                   </viewports>
+                                </digital>
+                            <digital>
+                                    <channel>4</channel>
+                                    <name><![CDATA[Three Phase Inverter1.Phase B.S2]]></name>
+                                    <is_locked>False</is_locked>
+                                    <vertical_offset>0.0</vertical_offset>
+                                    <row>11</row>
+                                    <viewports>
+                                        
+                                        <num_viewport>5</num_viewport>
+                                        
+                                   </viewports>
+                                </digital>
+                            <digital>
+                                    <channel>5</channel>
+                                    <name><![CDATA[Three Phase Inverter1.Phase C.S2]]></name>
+                                    <is_locked>False</is_locked>
+                                    <vertical_offset>0.0</vertical_offset>
+                                    <row>12</row>
+                                    <viewports>
+                                        
+                                        <num_viewport>5</num_viewport>
+                                        
+                                   </viewports>
+                                </digital>
+                        </digital_signals>
+                    </scope>
+                </widget_settings>
+
+            </component_data>
+        </components>
+</ui_settings>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<?ccsproject version="1.0"?>
+<projectOptions>
+	<ccsVariant value="50:Theia-based"/>
+	<ccsVersion value="70.1.1"/>
+	<deviceFamily value="C2000"/>
+	<executableActions value=""/>
+	<createSlaveProjects value=""/>
+	<templateProperties value="id=adc_ex2_soc_epwm.projectspec.LaunchXL_F28P65x"/>
+	<origin value="C:\ti\C2000Ware_5_04_00_00\driverlib\f28p65x\examples\c28x\adc\CCS\adc_ex2_soc_epwm.projectspec"/>
+	<filesToOpen value=""/>
+	<activeTargetConfiguration value="targetConfigs/F28P65_Target.ccxml"/>
+	<isTargetConfigurationManual value="true"/>
+</projectOptions>

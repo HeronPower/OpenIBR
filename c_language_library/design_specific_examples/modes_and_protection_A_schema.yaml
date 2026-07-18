@@ -1,0 +1,70 @@
+---
+metadata:
+    name: modesAndProtection
+    type: A
+    revision: 0
+    format_version: 0.0
+    description: 'Modes and protection module'
+    parent_library: 'Design_specific_examples'
+    category: 'element'
+
+IN:
+    use: inputs_group
+    signals:
+        vdc:
+            description: 'Measured dc-voltage'
+            type: float
+            default: 1.0f
+            units: 'Volts'
+        acOk:
+            description: 'Ac checks boolean indicator'
+            type: bool
+            default: false
+        enableRequest:
+            description: 'External enable request'
+            type: bool
+            default: false
+
+CONFIG:
+    use: config_group
+    description: 'Controller configuration'
+    signals:
+        dcOverVoltageThreshold:
+            description: 'Threshold for dc-overvoltage'
+            type: float
+            default: 1.2f
+            units: 'Volts'
+        dcUnderVoltageThreshold:
+            description: 'Threshold for dc-undervoltage'
+            type: float
+            default: 0.6f
+            units: 'Volts'
+        VdcEventClearTime:
+            description: 'Clearing time for dcVoltage event'
+            type: float
+            default: 20e-3f
+            units: 'sec'
+
+OUT:
+    use: outputs_group
+    signals:
+        enable:
+            description: 'Enable output'
+            type: bool
+            default: false
+
+STATE:
+    use: state_group
+    signals:
+        dcOV:
+            description: 'Dc-overvoltage flag'
+            type: bool
+            default: false
+        dcUV:
+            description: 'Dc-undervoltage flag'
+            type: bool
+            default: false
+        protectionAllClear:
+            description: 'Protection functions all-clear signal'
+            type: bool
+            default: false

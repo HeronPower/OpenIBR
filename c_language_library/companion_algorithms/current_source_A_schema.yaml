@@ -1,0 +1,94 @@
+---
+metadata:
+    name: currentSource
+    type: A
+    revision: 0
+    description: 'Grid-following current-source controls'
+    parent_library: 'Companion_algorithms'
+    category: 'element'
+
+IN:
+    use: inputs_group
+    signals:
+        P_request:
+            description: 'Real power request'
+            type: float
+            default: 0.0f
+            units: 'Watts'
+        Q_request:
+            description: 'Reactive power request'
+            type: float
+            default: 0.0f
+            units: 'VArs'
+        V_pve:
+            description: 'Positive sequence voltage phasor'
+            type: cmplx_t
+            default: [1.0f, 0.0f]
+            units: 'Volts'
+        pll_osc:
+            description: 'PLL Oscillator'
+            type: cmplx_t
+            array: 3
+            default: [[0.0f, 0.0f],
+                     [0.0f, 0.0f],
+                     [0.0f, 0.0f]]
+            units: 'unitless'
+
+GENERAL_CFG:
+    use: config_group
+    description: 'General currentSource configuration'
+    signals:
+        Plimit:
+            description: 'Limit imposed on power request'
+            type: float
+            default: 1.0f
+            units: 'pu'
+        Qlimit:
+            description: 'Limit imposed on reactive power request'
+            type: float
+            default: 0.5f
+            units: 'pu'
+        SRated:
+            description: 'Power rating'
+            type: float
+            default: 1.0f
+            units: 'VA'
+        VllRated:
+            description: 'Rated line-to-line voltage'
+            type: float
+            default: 1.0f
+            units: 'Volts'
+        VllMax_pu:
+            description: 'Max voltage for the current source'
+            type: float
+            default: 1.1f
+            units: 'Volts'
+        VllMin_pu:
+            description: 'Min voltage for the current source'
+            type: float
+            default: 0.9f
+            units: 'Volts'
+
+STATE:
+    use: state_group
+    signals:
+        P_cmd:
+            description: 'Commanded real power'
+            type: float
+            default: 0.0f
+            units: 'Watts'
+        Q_cmd:
+            description: 'Commanded reactive power'
+            type: float
+            default: 0.0f
+            units: 'VARs'
+
+OUT:
+    use: outputs_group
+    signals:
+        i_ref:
+            description: 'Time-domain current references'
+            type: float
+            array: 3
+            default: [0.0f, 0.0f, 0.0f]
+            units: 'Amps'

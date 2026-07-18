@@ -1,0 +1,291 @@
+---
+metadata:
+    name: acChecks
+    type: A
+    revision: 0
+    format_version: 0.0
+    description: 'ac checks component for detecting grid conditions'
+    parent_library: 'Companion_algorithms'
+    category: 'element'
+
+IN:
+    use: inputs_group
+    signals:
+        freq:
+            description: 'frequency'
+            type: float
+            default: 0.0
+            units: 'Hz'
+        Vph:
+            description: 'Single-phase RMS voltage'
+            type: float
+            array: 3
+            default: [0.0f, 0.0f, 0.0f]
+            units: 'Volts'
+        Vnve:
+            description: 'negative sequence voltage'
+            type: cmplx_t
+            default: [0.0f, 0.0f]
+            units: 'Volts'
+
+GENERAL_CFG:
+    use: config_group
+    descritpion: 'General configuraion parameters'
+    signals:
+        VllRated:
+            description: 'Nominal line-to-line voltage'
+            type: float
+            default: 1.0f
+            units: 'Volts'
+        nominalFrequency:
+            description: 'Nominal line frequency'
+            type: float
+            default: 60.0f
+            units: 'Hz'
+
+QUALIFY_CFG:
+    use: config_group
+    description: 'Grid qualification parameters'
+    signals:
+        fMin:
+            description: 'Minimum reconnection frequency, relative to nominal'
+            type: float
+            default: -2.0
+            units: 'Hz'
+        fMax:
+            description: 'Maximum reconnection frequency, relative to nominal'
+            type: float
+            default: 2.0
+            units: 'Hz'
+        vMin:
+            description: 'Minimum reconnection voltage'
+            type: float
+            default: 0.85
+            units: 'pu'
+        vMax:
+            description: 'Maximum reconnection voltage'
+            type: float
+            default: 1.15
+            units: 'pu'
+        vNveLim:
+            description: 'Limit on negative sequence voltage'
+            type: float
+            default: 0.2
+            units: 'pu'
+        tDisqualVoltage:
+            description: 'Grace timeout before voltage is disqualified'
+            type: float
+            default: 0.1
+            units: 'sec'
+        tDisqualVnve:
+            description: 'Grace timeout for disqualifying based on negative sequence'
+            type: float
+            default: 0.1
+            units: 'sec'
+        tDisqualFreq:
+            description: 'Grace timeout before frequency is disqualified'
+            type: float
+            default: 0.1
+            units: 'sec'
+        tRequalify:
+            description: 'Qualification time (delay)'
+            type: float
+            default: 5.0
+            units: 'sec'
+TRIPS_CFG:
+    use: config_group
+    description: 'Trip settings for voltage and frequency'
+    signals:
+        clearingTimeout:
+            description: 'Time duration before a trip is cleared (allows qualification to restart)'
+            type: float
+            default: 0.1
+            units: 'sec'
+        underFrequencyThreshold1:
+            description: 'Under-frequency trip threshold 1, relative to nominal'
+            type: float
+            default: -3.0
+            units: 'Hz'
+        underFrequencyTimeout1:
+            description: 'Under-frequency trip timeout 1'
+            type: float
+            default: 60.0
+            units: 'sec'
+        overFrequencyThreshold1:
+            description: 'Over-frequency trip threshold 1, relative to nominal'
+            type: float
+            default: 2.0
+            units: 'Hz'
+        overFrequencyTimeout1:
+            description: 'Over-frequency trip timeout 1'
+            type: float
+            default: 60.0
+            units: 'sec'
+        underFrequencyThreshold2:
+            description: 'Under-frequency trip threshold 2, relative to nominal'
+            type: float
+            default: -5.0
+            units: 'sec'
+            units: 'Hz'
+        underFrequencyTimeout2:
+            description: 'Under-frequency trip timeout 2'
+            type: float
+            default: 20.0
+            units: 'sec'
+        overFrequencyThreshold2:
+            description: 'Over-frequency trip threshold 2, relative to nominal'
+            type: float
+            default: 5.0
+            units: 'Hz'
+        overFrequencyTimeout2:
+            description: 'Over-frequency trip timeout 2'
+            type: float
+            default: 20.0
+            units: 'sec'
+        underVoltageThreshold1:
+            description: 'Under-voltage trip threshold 1'
+            type: float
+            default: 0.88
+            units: 'pu'
+        underVoltageTimeout1:
+            description: 'Under-voltage trip timeout 1'
+            type: float
+            default: 60.0
+            units: 'sec'
+        overVoltageThreshold1:
+            description: 'Over-voltage trip threshold 1'
+            type: float
+            default: 1.1
+            units: 'pu'
+        overVoltageTimeout1:
+            description: 'Over-voltage trip timeout 1'
+            type: float
+            default: 60.0
+            units: 'sec'
+        underVoltageThreshold2:
+            description: 'Under-voltage trip threshold 2'
+            type: float
+            default: 0.5
+            units: 'pu'
+        underVoltageTimeout2:
+            description: 'Under-voltage trip timeout 2'
+            type: float
+            default: 20.0
+            units: 'sec'
+        overVoltageThreshold2:
+            description: 'Over-voltage trip threshold 2'
+            type: float
+            default: 1.2
+            units: 'pu'
+        overVoltageTimeout2:
+            description: 'Over-voltage trip timeout 2'
+            type: float
+            default: 10.0
+            units: 'sec'
+
+OUT:
+    use: outputs_group
+    signals:
+        acOk:
+            description: 'ac is qualified ok'
+            type: bool
+            default: false
+
+QUALIFY_STATE:
+    use: state_group
+    description: 'Status of ac qualification function'
+    signals:
+        timer:
+            description: 'Qualification time remaining'
+            type: float
+            default: 0.0
+            units: 'sec'
+        voltageInrange:
+            description: 'Voltage within requalification thresholds'
+            type: bool
+            default: false
+        vimbalanceInrange:
+            description: 'Voltage imbalance within requalification threshold'
+            type: bool
+            default: false
+        freqInrange:
+            description: 'Frequency within requalification thresholds'
+            type: bool
+            default: false
+
+TRIP_STATE:
+    use: state_group
+    description: 'Status of ac trips'
+    signals:
+        underFrequency1State:
+            description: 'State of under-frequency trip 1'
+            type: bool
+            default: false
+        underFrequency1Timer:
+            description: 'Under-frequency trip timer 1'
+            type: float
+            default: 0.0
+            units: 'sec'
+        overFrequency1State:
+            description: 'State of over-frequency trip 1'
+            type: bool
+            default: false
+        overFrequency1Timer:
+            description: 'Over-frequency trip timer 1'
+            type: float
+            default: 0.0
+            units: 'sec'
+        underFrequency2State:
+            description: 'State of under-frequency trip 2'
+            type: bool
+            default: false
+        underFrequency2Timer:
+            description: 'Under-frequency trip timer 2'
+            type: float
+            default: 0.0
+            units: 'sec'
+        overFrequency2State:
+            description: 'State of over-frequency trip 2'
+            type: bool
+            default: false
+        overFrequency2Timer:
+            description: 'Over-frequency trip timer 2'
+            type: float
+            default: 0.0
+            units: 'sec'
+        underVoltage1State:
+            description: 'State of under-voltage trip 1'
+            type: bool
+            default: false
+        underVoltage1Timer:
+            description: 'Under-voltage trip timer 1'
+            type: float
+            default: 0.0f
+            units: 'sec'
+        overVoltage1State:
+            description: 'State of over-voltage trip 1'
+            type: bool
+            default: false
+        overVoltage1Timer:
+            description: 'Over-voltage trip timer 1'
+            type: float
+            default: 0.0f
+            units: 'sec'
+        underVoltage2State:
+            description: 'State of under-voltage trip 2'
+            type: bool
+            default: false
+        underVoltage2Timer:
+            description: 'Under-voltage trip timer 2'
+            type: float
+            default: 0.0f
+            units: 'sec'
+        overVoltage2State:
+            description: 'State of over-voltage trip 2'
+            type: bool
+            default: false
+        overVoltage2Timer:
+            description: 'Over-voltage trip timer 2'
+            type: float
+            default: 0.0f
+            units: 'sec'

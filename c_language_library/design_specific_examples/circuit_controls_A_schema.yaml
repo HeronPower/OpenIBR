@@ -1,0 +1,102 @@
+metadata:
+    name: circuitControls
+    type: A
+    revision: 0
+    format_version: 0.0
+    description: 'Manages the converter circuit to look like a controlled current source'
+    parent_library: 'Design_specific_examples'
+    category: 'element'
+
+IN:
+    use: inputs_group
+    signals:
+        i_ref:
+            description: 'Machine-limited current reference'
+            type: float
+            array: 3
+            default: [0.0f, 0.0f, 0.0f]
+        enable:
+            description: 'Enable flag for PWM bridge update'
+            type: bool
+            default: false
+
+CONTROLLER_CFG:
+    use: config_group
+    description: 'AC monitor controller settings'
+    signals:
+        wDamp:
+            description: 'Virtual damping bandwidth (rad/s)'
+            type: float
+            default: 1e3f
+        gDamp:
+            description: 'Inverse of virtual damping resistance (1/Ohm)'
+            type: float
+            default: 4.2f
+        kFeedFwd:
+            description: 'Feedforward gain on voltage'
+            type: float
+            default: 1.0f
+        kP:
+            description: 'Proportional gain for current controller'
+            type: float
+            default: 10.0f
+        kSlowPath:
+            description: 'Slow path gain for current controller'
+            type: float
+            default: 0.0f
+        wSlowPath:
+            description: 'Slow path bandwidth for current controller'
+            type: float
+            default: 628.0f
+        wOffsetCalibration:
+            description: 'Bandwidth to calibrate sensor offset'
+            type: float
+            default: 62.8f
+
+LIMITS_CFG:
+    use: config_group
+    description: 'Limits for bridge modulation output'
+    signals:
+        VBridgeLower:
+            description: 'Lower clamp limit for v_bridge'
+            type: float
+            default: 0.0f
+        VBridgeUpper:
+            description: 'Upper clamp limit for v_bridge'
+            type: float
+            default: 0.0f
+
+OUT:
+    use: outputs_group
+    signals:
+        v_ac:
+            description: 'Measured AC terminal voltages'
+            type: float
+            array: 3
+            default: [0.0f, 0.0f, 0.0f]
+        i_L:
+            description: 'Measured inductor currents'
+            type: float
+            array: 3
+            default: [0.0f, 0.0f, 0.0f]
+        v_dc:
+            description: 'Measured DC bus voltage'
+            type: float
+            default: 0.0f
+        online:
+            description: 'Connected to line (contactor state)'
+            type: bool
+            default: false
+        active:
+            description: 'Connected and switching, processing current'
+            type: bool
+            default: false
+
+STATE:
+    use: state_group
+    signals:
+        duty:
+            description: 'Inverter duty cycle'
+            type: float
+            array: 3
+            default: [0.0f, 0.0f, 0.0f]

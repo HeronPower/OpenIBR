@@ -1,0 +1,77 @@
+---
+metadata:
+    name: currentLimiting
+    type: A
+    revision: 0
+    format_version: 0.0
+    description: 'RMS Current limiting for grid forming inverter control'
+    parent_library: 'GFM_essentials'
+    category: 'element'
+
+IN:
+    use: inputs_group
+    signals:
+        I_limit:
+            description: 'Current limit'
+            type: float
+            default: 1.5f
+            units: 'Amps'
+        i_ref:
+            description: 'Time-domain machine current measurement'
+            type: float
+            array: 3
+            default: [0.0f, 0.0f, 0.0f]
+            units: 'Amps'
+        osc:
+            description: 'PLL Oscillator'
+            type: cmplx_t
+            array: 3
+            default: [[0.0f, 0.0f],
+                     [0.0f, 0.0f],
+                     [0.0f, 0.0f]]
+            units: 'unitless'
+
+CONFIG:
+    use: config_group
+    description: 'Current limiting controller settings'
+    signals:
+        IRated:
+            description: 'Rated RMS current'
+            type: float
+            default: 1.0f
+            units: 'Amps'
+        wAnalyzer:
+            description: 'Analyzer bandwidth'
+            type: float
+            default: 50.0f
+            units: 'Rad/sec'
+        peakSoftLimit:
+            description: 'Soft current limit at which nonlinearity starts'
+            type: float
+            default: 2.6f
+            units: 'pu'
+        peakHardLimit:
+            description: 'Hard current limit at which nonlinearity starts'
+            type: float
+            default: 3.5f
+            units: 'pu'
+
+OUT:
+    use: outputs_group
+    signals:
+        i_limited:
+            description: 'Current reference after limiting'
+            type: float
+            array: 3
+            default: [0.0f, 0.0f, 0.0f]
+            units: 'Amps'
+
+STATE:
+    use: state_group
+    signals:
+        i_excess:
+            description: 'Excess current to be subtracted from total'
+            type: float
+            array: 3
+            default: [0.0f, 0.0f, 0.0f]
+            units: 'Amps'

@@ -1,0 +1,128 @@
+metadata:
+    name: acMonitor
+    type: A
+    revision: 0
+    format_version: 0.0
+    description: 'AC voltage monitoring'
+    parent_library: 'Companion_algorithms'
+    category: 'element'
+
+IN:
+    use: inputs_group
+    signals:
+        v_ac:
+            description: 'Time-domain AC voltage measurement'
+            type: float
+            array: 3
+            default: [0.0f, 0.0f, 0.0f]
+            units: 'Volts'
+
+GENERAL_CFG:
+    use: config_group
+    description: 'General Ac monitor configuration'
+    signals:
+        VllRated:
+            description: 'Rated line-to-line voltage'
+            type: float
+            default: 1.0f
+            units: 'Volts'
+        nominalFrequency:
+            description: 'Nominal frequency'
+            type: float
+            default: 60.0f
+            units: 'Hz'
+        wAnalyzer:
+            description: 'Bandwidth for LPF on voltage analyzer'
+            type: float
+            default: 20.0f
+            units: 'Rad/sec'
+
+PLL_CFG:
+    use: config_group
+    description: 'Configuration of the phase-locked loop (PLL)'
+    signals:
+        wPhaseDetector:
+            description: 'Bandwidth for LPF in the PLL'
+            type: float
+            default: 50.0f
+            units: 'Rad/sec'
+        kP:
+            description: 'Proportional gain for the PLL'
+            type: float
+            default: 1.5f
+            units: 'Hz'
+        kI:
+            description: 'Integral gain for the PLL'
+            type: float
+            default: 4.5f
+            units: 'Hz/sec'
+        wIntegratorLeak:
+            description: 'Leak bandwidth for the integrator'
+            type: float
+            default: 10e-3f
+            units: 'Rad/sec'
+        proportionalLimit:
+            description: 'Limit for the proportional path'
+            type: float
+            default: 5.0f
+            units: 'Hz'
+        integratorLimit:
+            description: 'Limit for the integrator path'
+            type: float
+            default: 5.0f
+            units: 'Hz'
+
+OUT:
+    use: outputs_group
+    signals:
+        pll_osc:
+            description: 'PLL oscillator output'
+            type: cmplx_t
+            array: 3
+            default: [[0.0f, 0.0f],
+                     [0.0f, 0.0f],
+                     [0.0f, 0.0f]]
+            units: 'unitless'
+        frequency:
+            description: 'PLL frequency output'
+            type: float
+            default: 60.0f
+            units: 'Hz'
+        Vpve:
+            description: 'Positive sequence voltage magnitude'
+            type: cmplx_t
+            default: [0.0f, 0.0f]
+            units: 'Volts'
+        Vnve:
+            description: 'Negative sequence voltage magnitude'
+            type: cmplx_t
+            default: [0.0f, 0.0f]
+            units: 'Volts'
+        Vzero:
+            description: 'Zero sequence voltage magnitude'
+            type: cmplx_t
+            default: [0.0f, 0.0f]
+            units: 'Volts'
+        Vph:
+            description: 'Single-phase RMS voltage'
+            type: float
+            array: 3
+            default: [0.0f, 0.0f, 0.0f]
+            units: 'Volts'
+
+STATE:
+    use: state_group
+    description: 'Status of AC monitor state variables'
+    signals:
+        PllLocked:
+            description: 'PLL successfully locked'
+            type: bool
+            default: false
+        Vrotated:
+            description: 'Voltage phasor'
+            type: cmplx_t
+            array: 3
+            default: [[0.0f, 0.0f],
+                     [0.0f, 0.0f],
+                     [0.0f, 0.0f]]
+            units: 'Volts'

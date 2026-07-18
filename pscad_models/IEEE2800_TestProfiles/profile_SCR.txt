@@ -1,0 +1,20 @@
+! SCR profile, ensure that base voltage and generator maximum power are specified correctly in "SCR Test" parameters 
+-100            10
+0               10 
+0.0001          5
+5              5
+5.0001         3
+10              3
+10.0001         1.5
+15              1.5
+15.0001         1.2
+60              1.2
+ENDFILE:ENDFILE:
+
+
+
+
+
+
+
+

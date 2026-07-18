@@ -1,0 +1,15 @@
+! This profile is for NOGRR 245 proposed HVRT.  The 2.0 pu at end intentionally trips. https://www.ercot.com/mktrules/issues/NOGRR245#keydocs
+-100 			1
+0.0 			1
+0.0001 			1.2
+0.2			1.2
+1.0			1.2
+1.0001 			1.1	
+10.0 			1.1
+10.0001 		1.02
+18.0 			1.02
+18.0001 		1.0
+70.0 			1.0
+ENDFILE:
+
+

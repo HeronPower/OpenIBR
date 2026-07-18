@@ -1,0 +1,277 @@
+---
+metadata:
+    name: machineModel
+    type: A
+    revision: 0
+    format_version: 0.0
+    description: 'Machine model for grid forming inverter control'
+    parent_library: 'GFM_essentials'
+    category: 'element'
+
+IN:
+    use: inputs_group
+    signals:
+        v_ac:
+            description: 'Time-domain ac voltage measurement'
+            type: float
+            array: 3
+            default: [0.0f, 0.0f, 0.0f]
+            units: 'Volts'
+        PReq:
+            description: 'Active power request'
+            type: float
+            default: 0.0f
+            units: 'Watts'
+        VRef:
+            description: 'Voltage reference'
+            type: float
+            default: 1.0f
+            units: 'Volts'
+        FRef:
+            description: 'Frequency reference'
+            type: float
+            default: 60.0f
+            units: 'Hz'
+        enable:
+            description: 'Enable machine model'
+            type: bool
+            default: false
+        
+GENERAL_CFG:
+    use: config_group
+    description: 'Machine model controller settings'
+    signals:
+        SRated:
+            description: 'Power rating'
+            type: float
+            default: 1.0f
+            units: 'VA'
+        VllRated:
+            description: '3-phase line-to-line voltage rating'
+            type: float
+            default: 1.0f
+            units: 'Volts'
+        nominalFrequency:
+            description: 'Nominal frequency'
+            type: float
+            default: 60.0f
+            units: 'Hz'
+
+MECHANICAL_CFG:
+    use: config_group
+    description: 'Parameters for mechanical system'
+    signals:
+        InertialConstant:
+            description: 'Governor inertia constant (H) in seconds'
+            type: float
+            default: 2.5f
+            units: 'sec'
+        kDroop:
+            description: 'Active power droop gain, Wpu/Hz'
+            type: float
+            default: 1.0f
+            units: 'pu'
+        kDamper:
+            description: 'Rotor damping gain, Wpu/Hz'
+            type: float
+            default: 2.0f
+            units: 'pu'
+        wDamperDecoupler:
+            description: 'Bandwidth of LPF/HPF combo decoupling governer from mechanical damper'
+            type: float
+            default: 3.33f
+            units: 'rad/sec'
+        deltaFRefMin:
+            description: 'Minimum Frequency Reference, relative to nominal frequency'
+            type: float
+            default: -1.0f
+            units: 'Hz'
+        deltaFRefMax:
+            description: 'Maximum Frequency Reference, relative to nominal frequency'
+            type: float
+            default: 1.0f
+            units: 'Hz'
+        rotorDeltaFreqMin:
+            description: 'Rotor frequency minimum, relative to nominal frequency'
+            type: float
+            default: -5.0f
+            units: 'Hz'
+        rotorDeltaFreqMax:
+            description: 'Rotor frequency maximum, relative to nominal frequency'
+            type: float
+            default: 5.0f
+            units: 'Hz'
+        mechPowerMin:
+            description: 'Mechanical power minimum'
+            type: float
+            default: -1.2f
+            units: 'pu'
+        mechPowerMax:
+            description: 'Mechanical power maximum'
+            type: float
+            default: 1.2f
+            units: 'pu'
+
+SYNC_CFG:
+    use: config_group
+    description: 'Parameters for voltage analysis & synchronizer'
+    signals:
+        wConditioned:
+            description: 'Bandwidth for LPF on conditioned voltage'
+            type: float
+            default: 2.0f
+            units: 'rad/sec'
+        VConditionedUpRateLimit:
+            description: 'Conditioned voltage upper rate limit'
+            type: float
+            default: 1.0f
+            units: 'pu/sec'
+        VConditionedDownRateLimit:
+            description: 'Conditioned voltage lower rate limit'
+            type: float
+            default: 0.02f
+            units: 'pu/sec'
+        kpSync:
+            description: 'Proportional sync gain'
+            type: float
+            default: 20.0f
+            units: 'pu'
+        kFastSync:
+            description: 'High-pass filter path sync gain'
+            type: float
+            default: 200.0f
+            units: 'pu'
+        wFastSync:
+            description: 'High-pass filter path sync bandwidth'
+            type: float
+            default: 200.0f
+            units: 'rad/sec'
+        pSyncLimit:
+            description: 'Saturation limit for synch power'
+            type: float
+            default: 3.0f
+            units: 'pu'
+        syncFadeThreshold:
+            description: 'Voltage at which to start fading out sync power when ramping'
+            type: float
+            default: 0.2f
+            units: 'pu'
+        syncFadeGain:
+            description: 'Slope at which to fade-out sync power when ramping'
+            type: float
+            default: 4.0f
+            units: 'pu'
+
+ELECTRICAL_CFG:
+    use: config_group
+    description: 'Parameters for electrical system'
+    signals:
+        exciterVMin:
+            description: 'Excitation voltage lower limit'
+            type: float
+            default: 0.9f
+            units: 'pu'
+        exciterVMax:
+            description: 'Excitation voltage upper limit'
+            type: float
+            default: 1.1f
+            units: 'pu'
+        exciterVoltageHeadroom:
+            description: 'Voltage headroom allowed during blackstart and extended LVRT'
+            type: float
+            default: 0.3f
+            units: 'pu'
+        wExcitation:
+            description: 'Excitation bandwidth'
+            type: float
+            default: 10.0f
+            units: 'rad/sec'
+        Xs:
+            description: 'Emulated stator reactance'
+            type: float
+            default: 0.3f
+            units: 'pu'
+        rs:
+            description: 'Emulated stator resistance'
+            type: float
+            default: 0.08f
+            units: 'pu'
+        rN:
+            description: 'Emulated neutral resistance'
+            type: float
+            default: 0.2f
+            units: 'pu'
+        wVoltageAnalyzer:
+            description: 'Voltage analyzer bandwidth'
+            type: float
+            default: 50.0f
+            units: 'rad/sec'
+
+OUT:
+    use: outputs_group
+    signals:
+        i_ref:
+            description: 'Time-domain machine current reference'
+            type: float
+            array: 3
+            default: [0.0f, 0.0f, 0.0f]
+            units: 'Amps'
+        fRotor:
+            description: 'Rotor frequency'
+            type: float
+            default: 60.0f
+            units: 'Hz'
+        rotor_osc:
+            description: 'Rotor oscillator output'
+            type: cmplx_t
+            array: 3
+            default: [[0.0f, 0.0f],
+                     [0.0f, 0.0f],
+                     [0.0f, 0.0f]]
+            units: 'unitless'
+
+STATE:
+    use: state_group
+    description: 'Machine model state variables'
+    signals:
+        pMech:
+            description: 'Governer power input'
+            type: float
+            default: 0.0f
+            units: 'Watts'
+        pElec:
+            description: 'Electrical power out'
+            type: float
+            default: 0.0f
+            units: 'Watts'
+        pSync:
+            description: 'Synchronization power'
+            type: float
+            default: 0.0f
+            units: 'Watts'
+        VExciter:
+            description: 'Exciter voltage'
+            type: float
+            default: 0.0f
+            units: 'Volts'
+        v_emf:
+            description: 'Time-domain EMF (internal voltage)'
+            type: float
+            array: 3
+            default: [0.0f, 0.0f, 0.0f]
+            units: 'Volts'
+        VdConditioned:
+            description: 'Conditioned d-axis voltage'
+            type: float
+            default: 0.0f
+            units: 'Volts'
+        qElec:
+            description: 'Electrical reactive power'
+            type: float
+            default: 0.0f
+            units: 'Vars'
+        V_pve_pu:
+            description: 'Estimated per-unit voltage'
+            type: cmplx_t
+            default: [0.0f, 0.0f]
+            units: 'pu'

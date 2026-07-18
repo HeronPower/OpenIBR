@@ -1,0 +1,12 @@
+# Python requirements for schema_tools
+# Used by generate_header.py and generate_all_headers.py
+
+# YAML parsing
+PyYAML>=6.0
+
+# Note: The following are part of Python standard library and don't need installation:
+# - os
+# - sys
+# - pathlib
+# - subprocess
+# - typing

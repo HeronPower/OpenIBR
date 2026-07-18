@@ -1,0 +1,135 @@
+---
+metadata:
+    name: dcVoltageCntl
+    type: A
+    revision: 0
+    format_version: 0.0
+    description: 'Dc-voltage controller'
+    parent_library: 'Companion_algorithms'
+    category: 'element'
+
+IN:
+    use: inputs_group
+    signals:
+        vdc:
+            description: 'Measured dc-voltage'
+            type: float
+            default: 0.0f
+            units: 'Volts'
+        vdc_ref:
+            description: 'Target dc-voltage'
+            type: float
+            default: 0.0f
+            units: 'Volts'
+        pLimitHigh:
+            description: 'External high-side power limit'
+            type: float
+            default: 0.0f
+            units: 'Watts'
+        pLimitLow:
+            description: 'External low-side power limit'
+            type: float
+            default: 0.0f
+            units: 'Watts'
+        osc:
+            description: 'Oscillator input to shape current reference'
+            type: cmplx_t
+            array: 3
+            default: [[0.0f, 0.0f],
+                     [0.0f, 0.0f],
+                     [0.0f, 0.0f]]
+            units: 'unitless'
+        freq:
+            description: 'Line frequency estimate for notch filtering'
+            type: float
+            default: 60.0f
+            units: 'Hz'
+
+CONFIG:
+    use: config_group
+    description: 'Controller configuration'
+    signals:
+        VllRated:
+            description: 'Line-to-line voltage rating'
+            type: float
+            default: 1.0f
+            units: 'Volts'
+        voltageDeadband:
+            description: 'Deadband (+/-) from the reference voltage for which the voltage controller wont act'
+            type: float
+            default: 0.0f
+            units: 'Volts'
+        sogiNotchAlpha:
+            description: 'SOGI gain (alpha) used as notch filter'
+            type: float
+            default: 0.1f
+            units: 'unitless'
+        wLowPass:
+            description: 'Low pass filter bandwidth'
+            type: float
+            default: 100.0f
+            units: 'rad/sec'
+        kp:
+            description: 'Fast path gain'
+            type: float
+            default: 2.0f
+            units: 'Watts/Volt'
+        kSlowPath:
+            description: 'Slow path gain'
+            type: float
+            default: 0.0f
+            units: 'Watts/Volt'
+        wSlowPath:
+            description: 'Slow path bandwidth'
+            type: float
+            default: 5.0f
+            units: 'rad/sec'
+        slowPathMax:
+            description: 'Max saturation limit for slow controller path'
+            type: float
+            default: 0.4f
+            units: 'Watts'
+        slowPathMin:
+            description: 'Min saturation limit for slow controller path'
+            type: float
+            default: -0.1f
+            units: 'Watts'
+        pLimitExternalMinimum:
+            description: 'Minimum value for external power limit'
+            type: float
+            default: 0.1f
+            units: 'Watts'
+
+OUT:
+    use: outputs_group
+    signals:
+        i_ref:
+            description: 'Reference current from generated 3ph power request'
+            type: float
+            default: [0.0f, 0.0f, 0.0f]
+            array: 3
+            units: 'Amps'
+
+STATE:
+    use: state_group
+    signals:
+        powerRequest:
+            description: 'Power requested of subordinate controls'
+            type: float
+            default: 0.0f
+            units: 'Watts'
+        vdcNotched:
+            description: 'Notched measurement of dc bus voltage'
+            type: float
+            default: 0.0f
+            units: 'Volts'
+        vdcErrorNotchedLpf:
+            description: 'Notch- and low-pass filtered version of dc-voltage error'
+            type: float
+            default: 0.0f
+            units: 'Volts'
+        vdcErrorDeadband:
+            description: 'Error with deadband applied to it'
+            type: float
+            default: 0.0f
+            units: 'Volts'

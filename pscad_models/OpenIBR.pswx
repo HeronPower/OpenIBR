@@ -1,0 +1,20 @@
+<workspace name="OpenIBR" version="5.0.2" crc="61843624">
+  <projects>
+    <project type="library" name="PSCADView" filepath=".\PMView.pslx" />
+    <project type="library" name="SourcesLoads" filepath=".\SourcesLoads.pslx" />
+    <project type="library" name="OpenIBR_Library" filepath=".\OpenIBR_Library.pslx" />
+    <project type="project" name="OpenIBR_BESS" filepath=".\OpenIBR_BESS.pscx" />
+    <project type="project" name="OpenIBR_PV_GFM" filepath=".\OpenIBR_PV_GFM.pscx" />
+    <project type="project" name="OpenIBR_PV_GFM_Plus" filepath=".\OpenIBR_PV_GFM_Plus.pscx" />
+    <project type="project" name="OpenIBR_SST" filepath=".\OpenIBR_SST.pscx" />
+  </projects>
+  <simulations />
+  <pmr />
+  <messagegrid expanded="">
+    <column name="Icon" />
+    <column name="Id" />
+    <column name="Component" />
+    <column name="Namespace" />
+    <column name="Description" />
+  </messagegrid>
+</workspace>

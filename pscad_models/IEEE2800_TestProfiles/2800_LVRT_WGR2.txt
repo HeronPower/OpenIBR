@@ -1,0 +1,26 @@
+! This profile is for proposed LVRT to align with IEEE2800 (nogrr245) for Wind.  The #2 at the end indicates this is a piece-wise curve.  The 0.1 pu at end tests protection to intentionally trip the plant. https://www.ercot.com/mktrules/issues/NOGRR245#keydocs
+-100 			1
+0	1
+0.0001	0.7
+1.3	0.7
+1.3001	1
+3	1
+3.0001	0
+3.16	0
+3.1601	1
+4.4	1
+4.401	0.25
+5.6	0.25
+5.601	1
+6.6	1
+6.601	0.5
+9.1	0.5
+9.101	1
+10.7	1
+10.701	0.7
+13.7	0.7
+13.701	1
+22	1
+ENDFILE:
+
+

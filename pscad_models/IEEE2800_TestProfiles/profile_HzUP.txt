@@ -1,0 +1,8 @@
+! This profile is for Frequency test
+-100 			60.0
+0 			60.0
+0.06 			60.3
+7.0 			60.3
+7.3 			61.79
+40.0			61.79
+ENDFILE:

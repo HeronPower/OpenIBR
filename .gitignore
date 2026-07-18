@@ -1,0 +1,16 @@
+models/slprj/
+*.autosave
+*.slxc
+*.mexw64
+.clangd
+CPU1_*/
+.settings/
+.theia/
+build/
+*Target files/
+*autogen.h
+*slprj/
+*.gf46/
+*.vscode/
+__pycache__/
+*.pyc
