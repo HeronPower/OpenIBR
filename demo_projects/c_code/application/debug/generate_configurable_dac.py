@@ -3,7 +3,12 @@
 Generates the two headers behind the configurable debug DAC:
 
 1. signal_ids_autogen.h -- one #define signal ID per scalar signal (and per
-   element of an array signal), across all YAML schema files.
+   element of an array signal), across every module app.c actually
+   #includes (see the "Only modules app.c actually #includes" note under
+   (2) below - the same collision reason applies here: circuit_controls_A
+   and circuit_controls_B, for instance, share the schema 'metadata.name'
+   circuitControls, so IDs from an unused variant would collide with the
+   active one's).
 
    Naming convention: SIGNAL_ID_<MODULE>_<GROUP>_<SIGNAL>[index]
        e.g. circuitControls.yaml, group OUT, signal i_L (array of 3)
@@ -42,9 +47,7 @@ Usage: python generate_configurable_dac.py [app_c_path] [schema_root] [output_he
         and where signal_ids_autogen.h is written (defaults to output_header's directory)
 """
 
-import glob
 import os
-import re
 import sys
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -53,46 +56,12 @@ SCHEMA_TOOLS_DIR = os.path.join(REPO_ROOT, 'schema_tools')
 sys.path.insert(0, SCHEMA_TOOLS_DIR)
 
 from generate_header import SchemaParser
-
-CMPLX_COMPONENTS = (('REAL', 'real'), ('IMAG', 'imag'))
-
-
-def camel_to_snake_upper(name: str) -> str:
-    """Convert camelCase / PascalCase / snake_case to UPPER_SNAKE_CASE."""
-    s = re.sub(r'(?<=[a-z0-9])(?=[A-Z])', '_', name)
-    s = s.replace('-', '_')
-    return s.upper()
-
-
-def signal_to_upper(name: str) -> str:
-    """Convert a signal name (e.g. 'i_L', 'v_ac') to a compact upper token (e.g. 'IL', 'VAC')."""
-    return name.replace('_', '').upper()
-
-
-def expand_signal(signal_name: str, signal_def: dict) -> list:
-    """Expand one signal definition into (id_suffix, access_expr) pairs.
-
-    Scalars produce one pair; arrays produce one pair per element.
-    cmplx_t signals are split into REAL/IMAG pairs (per element, if an array).
-    """
-    signal_token = signal_to_upper(signal_name)
-    array_size = signal_def.get('array')
-    is_cmplx = signal_def.get('type') == 'cmplx_t'
-
-    indices = range(array_size) if array_size else [None]
-    index_suffix = (lambda i: str(i) if i is not None else '')
-
-    pairs = []
-    for i in indices:
-        base_access = f"{signal_name}[{i}]" if i is not None else signal_name
-
-        if is_cmplx:
-            for comp_suffix, field in CMPLX_COMPONENTS:
-                pairs.append((f"{signal_token}_{comp_suffix}{index_suffix(i)}", f"{base_access}.{field}"))
-        else:
-            pairs.append((f"{signal_token}{index_suffix(i)}", base_access))
-
-    return pairs
+from schema_signal_utils import (
+    camel_to_snake_upper,
+    expand_signal,
+    get_active_schema_files,
+    get_autogen_include_path,
+)
 
 
 #
@@ -122,9 +91,7 @@ def collect_signal_ids(schema_path: str) -> list:
     return names
 
 
-def generate_signal_ids_header(schema_root: str, output_header: str):
-    schema_files = sorted(glob.glob(os.path.join(schema_root, '**', '*_schema.yaml'), recursive=True))
-
+def generate_signal_ids_header(schema_files: list, output_header: str):
     all_names = []
     for schema_path in schema_files:
         all_names.extend(collect_signal_ids(schema_path))
@@ -160,58 +127,6 @@ def generate_signal_ids_header(schema_root: str, output_header: str):
 # Switch-case header (configurable_dac_switch_autogen.h)
 #
 
-def get_active_schema_files(app_c_path: str, schema_root: str) -> list:
-    """Find the schema files behind every '..._autogen.h' app.c includes."""
-    app_c_dir = os.path.dirname(os.path.normpath(app_c_path))
-    with open(app_c_path, 'r') as f:
-        include_paths = re.findall(r'#include\s+"([^"]+_autogen\.h)"', f.read())
-
-    all_schema_files = [os.path.normpath(p) for p in
-                        glob.glob(os.path.join(schema_root, '**', '*_schema.yaml'), recursive=True)]
-
-    schema_files = []
-    for include_path in include_paths:
-        autogen_header = os.path.normpath(os.path.join(app_c_dir, include_path))
-        module_dir = os.path.dirname(autogen_header)
-        parent_dir = os.path.dirname(module_dir)
-        header_name = os.path.basename(autogen_header)
-
-        match = next(
-            (s for s in all_schema_files
-             if os.path.dirname(s) == parent_dir and f"{SchemaParser(s).get_filename()}_autogen.h" == header_name),
-            None
-        )
-        if match is None:
-            raise FileNotFoundError(f"Could not find schema file backing '{autogen_header}' (included by {app_c_path})")
-
-        schema_files.append(match)
-
-    return schema_files
-
-
-def get_autogen_include_path(schema_path: str, output_root: str) -> str:
-    """Path to a schema's generated public header, relative to output_root."""
-    parser = SchemaParser(schema_path)
-    module_dir = os.path.join(os.path.dirname(schema_path), os.path.basename(schema_path)[:-len('_schema.yaml')])
-    header_name = f"{parser.get_filename()}_autogen.h"
-
-    # The folder name isn't always derivable from the schema filename (e.g.
-    # dc_voltage_cntl_A_schema.yaml -> dc_voltage_control_A/), so fall back to
-    # searching next to the schema if the guessed folder doesn't exist.
-    guessed_path = os.path.join(module_dir, header_name)
-    if os.path.exists(guessed_path):
-        return os.path.relpath(guessed_path, output_root)
-
-    matches = glob.glob(os.path.join(os.path.dirname(schema_path), '**', header_name), recursive=True)
-    if not matches:
-        raise FileNotFoundError(
-            f"Could not find generated header '{header_name}' for schema '{schema_path}'. "
-            f"Run generate_header.py (or generate_all_headers.py) first."
-        )
-
-    return os.path.relpath(matches[0], output_root)
-
-
 def collect_switch_cases(schema_path: str) -> list:
     """Return (case_label, struct_expression) pairs for every signal in a schema file."""
     parser = SchemaParser(schema_path)
@@ -243,9 +158,7 @@ def collect_switch_cases(schema_path: str) -> list:
     return cases
 
 
-def generate_switch_header(app_c_path: str, schema_root: str, output_header: str, output_root: str):
-    schema_files = get_active_schema_files(app_c_path, schema_root)
-
+def generate_switch_header(schema_files: list, output_header: str, output_root: str):
     includes = []
     all_cases = []
     for schema_path in schema_files:
@@ -298,9 +211,11 @@ def generate_switch_header(app_c_path: str, schema_root: str, output_header: str
 
 def generate(app_c_path: str, schema_root: str, output_header: str, output_root: str):
     """Generate the signal ID header and the switch-case header, in that order
-    (the switch labels must match the IDs)."""
-    generate_signal_ids_header(schema_root, os.path.join(output_root, 'signal_ids_autogen.h'))
-    generate_switch_header(app_c_path, schema_root, output_header, output_root)
+    (the switch labels must match the IDs). Both are scoped to only the
+    modules app_c_path actually #includes (see get_active_schema_files)."""
+    schema_files = get_active_schema_files(app_c_path, schema_root)
+    generate_signal_ids_header(schema_files, os.path.join(output_root, 'signal_ids_autogen.h'))
+    generate_switch_header(schema_files, output_header, output_root)
 
 
 def main():

@@ -1,0 +1,24 @@
+# Build-time list of internal controller signals to expose as extra,
+# always-present DLL output ports (beyond the standard v_bridge/pwm_enable).
+#
+# Each entry must match a name from logging/available_signals_autogen.txt
+# exactly (run `make` to refresh it). Read at build time only: `make`
+# regenerates logging/extra_outputs_autogen.h from this file, and a
+# misspelled name fails the build loudly. Edit this file and rebuild to
+# change what's exposed.
+#
+# Any host can record these like any other declared output port -- the
+# DLL itself does no file I/O.
+
+signals:
+  - circuitControls_OUT.v_bridge[0]
+  - circuitControls_OUT.v_bridge[1]
+  - circuitControls_OUT.v_bridge[2]
+  - machineModel_OUT.i_ref[0]
+  - machineModel_OUT.i_ref[1]
+  - machineModel_OUT.i_ref[2]
+  - machineModel_OUT.fRotor
+  - acMonitor_OUT.frequency
+  - acMonitor_OUT.Vpve.real
+  - acMonitor_OUT.Vpve.imag
+  - acChecks_OUT.acOk

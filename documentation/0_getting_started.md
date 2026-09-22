@@ -27,6 +27,7 @@ This repository contains:
     - An embedded project for a [TI Launchpad - F28P65x](https://www.ti.com/tool/LAUNCHXL-F28P65X)
     - Typhoon HiL models to run the TI Launchpad project
     - A python-based desktop GUI for sending commands to the TI Launchpad project
+- IEEE/CIGRE real-code DLL packaging of the C-language library, loadable directly by EMT/RMS tools (PSCAD, EMTP, RTDS). See [Using the IEEE/CIGRE DLL](9_using_the_ieee_cigre_dll.md).
 - Documentation:
     - Controller theory of operation, application notes, and an integration guide
     - A third party assessment [report](./third_party_assessments/HeronBESS_Model%20Quality%20test_Jul18_2026_final.pdf) for the Heron Link that demonstrates the use of OpenIBR to comply with established industry requirements
@@ -93,3 +94,6 @@ See [Using the PSCAD Model](7_using_the_pscad_model.md).
 
 # Using the HIL Project
 See [Using the HIL Project](8_using_the_hil_project.md).
+
+# Using the IEEE/CIGRE DLL
+See [Using the IEEE/CIGRE DLL](9_using_the_ieee_cigre_dll.md).

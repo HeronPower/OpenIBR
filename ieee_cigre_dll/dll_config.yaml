@@ -1,0 +1,30 @@
+# Compiled-in DLL configuration. See documentation/9_using_the_ieee_cigre_dll.md,
+# "Configuration tiers".
+#
+# Consumed by generate_dll_config.py, which emits
+# dll_config_generated.h -- see that script for the exact macro names.
+# (Named "_generated" rather than "_autogen" so schema_tools's
+# _autogen.h-include scanner -- which expects a backing *_schema.yaml for
+# every such include in gfm_battery_app.c -- doesn't try to resolve it.)
+
+# Advanced parameters: circuitControls current-controller tuning.
+# Compiled in only -- not exposed as TB958 Parameters. An advanced
+# integrator edits these and rebuilds the DLL.
+advanced_parameters:
+  circuitControls:
+    wDamp: 2000.0
+    gDamp: 2.893519   # was 1/(1.5*ZBase) at the 480V/1MVA default rating;
+                       # recompute by hand if VLL_RATED/S_RATED change
+    kFeedFwd: 1.0
+    kP: 0.15
+    kSlowPath: 0.0
+    wSlowPath: 1200.0
+    wOffsetCalibration: 62.8
+
+# Exposed parameters: real TB958 Parameters (Model_GetInfo /
+# Model_CheckParameters / Model_Initialize) -- a host can override these
+# per-instance. Values below are only the compiled-in defaults.
+exposed_parameters:
+  H: 2.5        # inertia constant, seconds
+  D: 2.0        # damping gain, pu (Wpu/Hz)
+  kDroop: 1.0   # active power droop gain, pu (Wpu/Hz)

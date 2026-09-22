@@ -1,0 +1,11 @@
+LIBRARY GFM_Battery_OpenIBR
+
+EXPORTS
+    Model_GetInfo
+    Model_FirstCall
+    Model_PrintInfo
+    Model_CheckParameters
+    Model_Initialize
+    Model_Outputs
+    Model_Iterate
+    Model_Terminate

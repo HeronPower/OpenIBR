@@ -24,6 +24,7 @@ commands = [
     # run the generator for design_specific_examples modules
     "python generate_header.py ../c_language_library/design_specific_examples/modes_and_protection_A_schema.yaml ../c_language_library/design_specific_examples/modes_and_protection_A",
     "python generate_header.py ../c_language_library/design_specific_examples/circuit_controls_A_schema.yaml ../c_language_library/design_specific_examples/circuit_controls_A",
+    "python generate_header.py ../c_language_library/design_specific_examples/circuit_controls_B_schema.yaml ../c_language_library/design_specific_examples/circuit_controls_B",
 
     # NOTE: signal ID / configurable-DAC generation lives in
     # demo_projects/c_code/application/debug/generate_configurable_dac.py; the

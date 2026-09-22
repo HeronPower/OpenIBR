@@ -9,6 +9,8 @@ CPU1_*/
 build/
 *Target files/
 *autogen.h
+*autogen.txt
+ieee_cigre_dll/dll_config_generated.h
 *slprj/
 *.gf46/
 *.vscode/
