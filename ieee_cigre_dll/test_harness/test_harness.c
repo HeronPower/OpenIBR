@@ -1,5 +1,6 @@
 /*
  * test_harness.c -- standalone EMT host for GFM_Battery_OpenIBR.dll
+ * Wattness change: dispatch nonfatal messages and errors by return status.
  *
  * Loads the DLL dynamically, couples it to the host-side AC network
  * (ac_network.c) and converter circuit (converter_sim.c), and records
@@ -10,7 +11,7 @@
  * documentation/9_using_the_ieee_cigre_dll.md, section 2.1.
  *
  * No automated pass/fail on controller behavior -- a nonzero exit means
- * the DLL failed to load, initialize, or step. Open the COMTRADE to
+ * library setup or a model call failed. Open the COMTRADE to
  * judge the traces.
  *
  * Usage:
@@ -32,6 +33,7 @@
 #include "ac_network.h"
 #include "converter_sim.h"
 #include "inverter_requests.h"
+#include "model_status.h"
 
 #define TEST_DURATION 30.0
 
@@ -314,9 +316,8 @@ int main(int argc, char **argv)
            VLL_NOM, F_NOM, NETWORK_S_BASE);
 
     memset(&instance, 0, sizeof(instance));
-    if (Model_FirstCall_p(&instance) != 0)
+    if (!model_status_ok("Model_FirstCall", Model_FirstCall_p(&instance), &instance))
     {
-        fprintf(stderr, "FAIL: Model_FirstCall returned nonzero\n");
         FreeLibrary(hDll);
         return 1;
     }
@@ -386,16 +387,13 @@ int main(int argc, char **argv)
     instance.ExternalOutputs = outputs;
     instance.SimTool_EMT_RMS_Mode = 1; /* EMT, per TB958 */
 
-    if (Model_CheckParameters_p(&instance) != 0)
+    if (!model_status_ok("Model_CheckParameters", Model_CheckParameters_p(&instance), &instance))
     {
-        fprintf(stderr, "FAIL: Model_CheckParameters rejected default parameters: %s\n",
-                instance.LastErrorMessage ? instance.LastErrorMessage : "(no message)");
         goto cleanup_fail;
     }
 
-    if (Model_Initialize_p(&instance) != 0)
+    if (!model_status_ok("Model_Initialize", Model_Initialize_p(&instance), &instance))
     {
-        fprintf(stderr, "FAIL: Model_Initialize returned nonzero\n");
         goto cleanup_fail;
     }
 
@@ -455,9 +453,9 @@ int main(int argc, char **argv)
                     /* Run the DLL once per app cycle (v_ac/i_L/v_dc/dispatch
                      * in, v_bridge/pwm_enable out), using this cycle's first
                      * model substep's measurements. */
-                    if (Model_Outputs_p(&instance) != 0)
+                    if (!model_status_ok("Model_Outputs", Model_Outputs_p(&instance), &instance))
                     {
-                        fprintf(stderr, "FAIL: Model_Outputs returned nonzero at step %d\n", step);
+                        fprintf(stderr, "  at step %d\n", step);
                         goto cleanup_fail;
                     }
 
@@ -493,7 +491,10 @@ int main(int argc, char **argv)
         }
     }
 
-    Model_Terminate_p(&instance);
+    if (!model_status_ok("Model_Terminate", Model_Terminate_p(&instance), &instance))
+    {
+        goto cleanup_fail;
+    }
 
     printf("Wrote %s.cfg / %s.dat (%d steps, %.1f s)\n",
            comtradeBase, comtradeBase, NUM_STEPS * MODEL_SUBSTEPS, NUM_STEPS * APP_STEP_SECONDS);
