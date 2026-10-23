@@ -11,6 +11,7 @@
  * "Multi-Instance and Snapshot Support".
  */
 
+/* Modified by Wattness, 2026: reject nonfinite parameters by named field. */
 #define GFM_BATTERY_DLL_EXPORTS
 #include "IEEE_Cigre_DLLInterface.h"
 
@@ -24,6 +25,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdbool.h>
+#include <math.h>
 
 /* ------------------------------------------------------------------ */
 /* Signal interface                                                    */
@@ -185,7 +187,6 @@ int MODEL_CALL Model_CheckParameters(IEEE_Cigre_DLLInterface_Instance *Instance)
 {
     GFM_Battery_Parameters *p;
     int i;
-    const double *values;
 
     if (!Instance || !Instance->Parameters)
     {
@@ -193,11 +194,12 @@ int MODEL_CALL Model_CheckParameters(IEEE_Cigre_DLLInterface_Instance *Instance)
     }
 
     p = (GFM_Battery_Parameters *)Instance->Parameters;
-    values = (const double *)p;
+    const double values[NUM_PARAMETERS] = { p->H, p->D, p->kDroop };
 
     for (i = 0; i < NUM_PARAMETERS; i++)
     {
-        if (values[i] < s_parameters[i].MinValue.Real64_Val ||
+        if (!isfinite(values[i]) ||
+            values[i] < s_parameters[i].MinValue.Real64_Val ||
             values[i] > s_parameters[i].MaxValue.Real64_Val)
         {
             Instance->LastErrorMessage = "Parameter out of range";
