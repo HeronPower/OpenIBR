@@ -1,5 +1,7 @@
 # OpenIBR IEEE/CIGRE Real-Code DLL — Application Note
 
+<!-- Modified by Wattness, 2026: clarify callback timing and retained controller state. -->
+
 ## 1. Introduction
 
 The `ieee_cigre_dll/` folder contains the setup necessary to package the an OpenIBR inverter controller as a compiled DLL that conforms to the CIGRE Technical Brochure 958 (JWG CIGRE B4.82/IEEE, Feb 2025) "real-code" interface — the same DLL-import convention supported by various EMT/RMS simulation tools including PSCAD. A simulator that implements a TB958 DLL Import tool can load the DLL directly and run the actual OpenIBR control code inside its own study, rather than a re-implementation of it.
@@ -31,7 +33,7 @@ flowchart TB
     end
 
     subgraph DLL["GFM_Battery_OpenIBR.dll"]
-        App["gfm_battery_app.c<br/>app_task_5kHz() - 5 kHz, single rate"]
+        App["gfm_battery_app.c<br/>app_task_5kHz() - 5 kHz host calls"]
     end
 
     Converter -->|"v_ac, i_L, v_dc"| App
@@ -59,7 +61,7 @@ In simulation time, the DLL must be iteratively called with electrical 'measurem
 
 ### 2.3 Simulation time-steps
 
-The DLL itself is single-rate: it declares (and must be called at) a fixed 200 µs / 5 kHz step — the same rate the real embedded firmware runs at. There is no multi-rate logic inside the DLL at all.
+The DLL exposes one fixed-rate host entry point: call `Model_Outputs` every 200 µs (5 kHz). Each call advances `app_task_5kHz`; that application also contains a private divider that calls `acChecks_1kHz(1e-3f)` every fifth application call. Thus the host interface runs at 5 kHz while AC qualification/protection checks run internally at 1 kHz. This internal divider is separate from the finer host-side network/converter substeps below.
 
 Time step of the host simulation must be smaller or equal to that of the DLL.  The test-harness network and converter models need a much finer step to resolve their own fast dynamics accurately, so `test_harness.c`'s main loop runs at the DLL's 5 kHz rate on the outside and performs `MODEL_SUBSTEPS` (16) fine 80 kHz network/converter steps inside each iteration:
 
@@ -109,6 +111,16 @@ sequenceDiagram
 | `Model_Terminate` | once, at teardown | No-op — nothing is heap-allocated in this single-instance build. |
 
 The three host-configurable `Parameters` — inertia (`H`), damping (`D`), and active-power droop (`kDroop`) — are the DLL's real TB958 `Parameters` (range-checked in `Model_CheckParameters`, applied in `Model_Initialize`). Everything else about the controller's tuning is compiled in; see [Configuration tiers](#33-configuration-tiers) below.
+
+### 2.5 Numeric inputs, status and recovery
+
+<!-- Modified by Wattness, 2026: document per-step numeric handling and diagnostic limitations. -->
+
+`Model_Outputs` checks that the instance and input/output buffers exist, then forwards the per-step inputs to the application. On a completed call, it returns OK after assigning the outputs. It does not validate the per-step numeric domain or independently check output finiteness. `Model_CheckParameters` concerns the three configuration parameters, not these per-step inputs.
+
+The input buffers contain real64 scalars. Eleven electrical/dispatch scalars enter float storage, while enable is interpreted as `enable != 0.0`; final PWM also depends on AC qualification. Signed instantaneous voltage/current, signed P/Q and intentionally saturating finite requests can be legitimate. The signal metadata does not define a complete numeric-domain, quality or freshness policy. State the assumptions and malformed-data handling used by the host integration explicitly. Finite bridge commands alone do not establish finite intermediate values or recovered controller history.
+
+`Model_Outputs` leaves `LastErrorMessage` and `LastGeneralMessage` unchanged, so retained text is not necessarily a diagnostic for the current call. Resuming finite inputs after a malformed call does not establish recovery of stateful controller paths. Interpret return codes, message freshness and controller history separately; see Section 4 for retained-state and snapshot considerations.
 
 ## 3. Code Structure and How to Compile
 
@@ -179,6 +191,10 @@ To change the test scenario: edit `test_harness/ac_network.c` (grid voltage/freq
 ## 4. Multi-Instance and Snapshot Support
 
 The controller's C library uses global state, by design, for its embedded-firmware use case (one instance per MCU) — not TB958's `DoubleStates`/`FloatStates`/`IntStates` vectors. As a result, the DLL is **single-instance on its own**: two loaded instances in the same process would corrupt each other's state. `Model_Info.GeneralInformation` states this directly, and `Model_Info` declares `NumIntStates`/`NumFloatStates`/`NumDoubleStates` as all zero — they would be nonzero under a multi-instance design.
+
+`Model_Initialize` calls `app_task_init` to apply configuration and recompute derived settings; it does not clear all retained controller state or reset the private AC-check divider. `Model_FirstCall` and `Model_Terminate` are no-ops in this wrapper. Calling these functions again in the same loaded image does not establish a cold restart.
+
+For independent direct-C experiments, start a fresh executable process for each controller trajectory and record its initialization and actual input history. If an experiment intentionally reuses one loaded image, identify its retained history explicitly. Process isolation for direct-C experiments does not validate Windows DLL unload/reload or the host-specific copying/snapshot mechanisms described below.
 
 Both capabilities below are nonetheless available with **zero changes to the DLL itself** — TB958 Section 7 names both as accepted last-resort techniques for exactly this situation, and this repo implements both entirely on the host side, in the wrapper layer around the DLL rather than inside it.
 
