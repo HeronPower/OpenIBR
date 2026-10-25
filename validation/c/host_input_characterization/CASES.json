@@ -1,0 +1,341 @@
+{
+  "kind": "Frozen locally authored API experiment, not a plant or transport contract",
+  "source_commit": "5e2396cef8e57765c6a8fefe34fc379c3a60c163",
+  "sample_time_seconds": 0.0002,
+  "warm_prefix_calls": 12004,
+  "injection_call_index_zero_based": 12004,
+  "injection_time_seconds": 2.4008,
+  "injection_on_AC_check_divider_call": true,
+  "recovery_calls": 250,
+  "recovery_duration_seconds": 0.05,
+  "complete_input_output_return_binary_capture": true,
+  "full_catalog_snapshot_count_per_trajectory": 6,
+  "selected_catalog_trace_fields": 29,
+  "physical_or_revenue_verdict": false,
+  "cases": [
+    {
+      "id": "reference_a",
+      "history": 12004,
+      "context": "enabled",
+      "scalar": -1,
+      "token": "0",
+      "category": "finite_control",
+      "reference": null
+    },
+    {
+      "id": "reference_b",
+      "history": 12004,
+      "context": "enabled",
+      "scalar": -1,
+      "token": "0",
+      "category": "finite_control",
+      "reference": "reference_a"
+    },
+    {
+      "id": "cold_reference",
+      "history": 0,
+      "context": "enabled",
+      "scalar": -1,
+      "token": "0",
+      "category": "finite_control",
+      "reference": null
+    },
+    {
+      "id": "disabled_reference",
+      "history": 12004,
+      "context": "disabled",
+      "scalar": -1,
+      "token": "0",
+      "category": "finite_control",
+      "reference": null
+    },
+    {
+      "id": "enable_zero",
+      "history": 12004,
+      "context": "enabled",
+      "scalar": 9,
+      "token": "0",
+      "category": "finite_control",
+      "reference": "reference_a"
+    },
+    {
+      "id": "enable_negative_zero",
+      "history": 12004,
+      "context": "enabled",
+      "scalar": 9,
+      "token": "-0",
+      "category": "finite_control",
+      "reference": "reference_a"
+    },
+    {
+      "id": "enable_two",
+      "history": 12004,
+      "context": "enabled",
+      "scalar": 9,
+      "token": "2",
+      "category": "finite_control",
+      "reference": "reference_a"
+    },
+    {
+      "id": "enable_negative_one",
+      "history": 12004,
+      "context": "enabled",
+      "scalar": 9,
+      "token": "-1",
+      "category": "finite_control",
+      "reference": "reference_a"
+    },
+    {
+      "id": "p_negative",
+      "history": 12004,
+      "context": "enabled",
+      "scalar": 7,
+      "token": "-500000",
+      "category": "finite_control",
+      "reference": "reference_a"
+    },
+    {
+      "id": "q_positive",
+      "history": 12004,
+      "context": "enabled",
+      "scalar": 8,
+      "token": "250000",
+      "category": "finite_control",
+      "reference": "reference_a"
+    },
+    {
+      "id": "q_negative",
+      "history": 12004,
+      "context": "enabled",
+      "scalar": 8,
+      "token": "-250000",
+      "category": "finite_control",
+      "reference": "reference_a"
+    },
+    {
+      "id": "p_at_positive_clamp",
+      "history": 12004,
+      "context": "enabled",
+      "scalar": 7,
+      "token": "p_at",
+      "category": "saturation_control",
+      "reference": "reference_a"
+    },
+    {
+      "id": "p_over_positive_clamp",
+      "history": 12004,
+      "context": "enabled",
+      "scalar": 7,
+      "token": "p_over",
+      "category": "saturation_control",
+      "reference": "reference_a"
+    },
+    {
+      "id": "q_at_positive_clamp",
+      "history": 12004,
+      "context": "enabled",
+      "scalar": 8,
+      "token": "q_at",
+      "category": "saturation_control",
+      "reference": "reference_a"
+    },
+    {
+      "id": "q_over_positive_clamp",
+      "history": 12004,
+      "context": "enabled",
+      "scalar": 8,
+      "token": "q_over",
+      "category": "saturation_control",
+      "reference": "reference_a"
+    },
+    {
+      "id": "dc_zero_enabled",
+      "history": 12004,
+      "context": "enabled",
+      "scalar": 6,
+      "token": "0",
+      "category": "behavior_only",
+      "reference": "reference_a"
+    },
+    {
+      "id": "dc_negative_enabled",
+      "history": 12004,
+      "context": "enabled",
+      "scalar": 6,
+      "token": "-1000",
+      "category": "behavior_only",
+      "reference": "reference_a"
+    },
+    {
+      "id": "dc_zero_disabled",
+      "history": 12004,
+      "context": "disabled",
+      "scalar": 6,
+      "token": "0",
+      "category": "finite_context_control",
+      "reference": "disabled_reference"
+    },
+    {
+      "id": "limit_equal",
+      "history": 12004,
+      "context": "enabled",
+      "scalar": 10,
+      "token": "-1000000",
+      "category": "finite_control",
+      "reference": "reference_a"
+    },
+    {
+      "id": "limit_upper_zero",
+      "history": 12004,
+      "context": "enabled",
+      "scalar": 10,
+      "token": "0",
+      "category": "finite_control",
+      "reference": "reference_a"
+    },
+    {
+      "id": "limit_lower_zero",
+      "history": 12004,
+      "context": "enabled",
+      "scalar": 11,
+      "token": "0",
+      "category": "finite_control",
+      "reference": "reference_a"
+    },
+    {
+      "id": "limit_reversed",
+      "history": 12004,
+      "context": "enabled",
+      "scalar": 10,
+      "token": "-2000000",
+      "category": "behavior_only",
+      "reference": "reference_a"
+    },
+    {
+      "id": "nan_v_ac_0",
+      "history": 12004,
+      "context": "enabled",
+      "scalar": 0,
+      "token": "nan",
+      "category": "behavior_only",
+      "reference": "reference_a"
+    },
+    {
+      "id": "nan_i_L_0",
+      "history": 12004,
+      "context": "enabled",
+      "scalar": 3,
+      "token": "nan",
+      "category": "behavior_only",
+      "reference": "reference_a"
+    },
+    {
+      "id": "nan_v_dc",
+      "history": 12004,
+      "context": "enabled",
+      "scalar": 6,
+      "token": "nan",
+      "category": "behavior_only",
+      "reference": "reference_a"
+    },
+    {
+      "id": "nan_P_request",
+      "history": 12004,
+      "context": "enabled",
+      "scalar": 7,
+      "token": "nan",
+      "category": "behavior_only",
+      "reference": "reference_a"
+    },
+    {
+      "id": "nan_Q_request",
+      "history": 12004,
+      "context": "enabled",
+      "scalar": 8,
+      "token": "nan",
+      "category": "behavior_only",
+      "reference": "reference_a"
+    },
+    {
+      "id": "nan_enable",
+      "history": 12004,
+      "context": "enabled",
+      "scalar": 9,
+      "token": "nan",
+      "category": "behavior_only",
+      "reference": "reference_a"
+    },
+    {
+      "id": "nan_P_lim_high",
+      "history": 12004,
+      "context": "enabled",
+      "scalar": 10,
+      "token": "nan",
+      "category": "behavior_only",
+      "reference": "reference_a"
+    },
+    {
+      "id": "nan_P_lim_low",
+      "history": 12004,
+      "context": "enabled",
+      "scalar": 11,
+      "token": "nan",
+      "category": "behavior_only",
+      "reference": "reference_a"
+    },
+    {
+      "id": "pos_inf_P_request",
+      "history": 12004,
+      "context": "enabled",
+      "scalar": 7,
+      "token": "inf",
+      "category": "behavior_only",
+      "reference": "reference_a"
+    },
+    {
+      "id": "neg_inf_P_request",
+      "history": 12004,
+      "context": "enabled",
+      "scalar": 7,
+      "token": "-inf",
+      "category": "behavior_only",
+      "reference": "reference_a"
+    },
+    {
+      "id": "pos_inf_v_dc",
+      "history": 12004,
+      "context": "enabled",
+      "scalar": 6,
+      "token": "inf",
+      "category": "behavior_only",
+      "reference": "reference_a"
+    },
+    {
+      "id": "neg_inf_v_dc",
+      "history": 12004,
+      "context": "enabled",
+      "scalar": 6,
+      "token": "-inf",
+      "category": "behavior_only",
+      "reference": "reference_a"
+    },
+    {
+      "id": "pos_inf_enable",
+      "history": 12004,
+      "context": "enabled",
+      "scalar": 9,
+      "token": "inf",
+      "category": "behavior_only",
+      "reference": "reference_a"
+    },
+    {
+      "id": "neg_inf_enable",
+      "history": 12004,
+      "context": "enabled",
+      "scalar": 9,
+      "token": "-inf",
+      "category": "behavior_only",
+      "reference": "reference_a"
+    }
+  ]
+}

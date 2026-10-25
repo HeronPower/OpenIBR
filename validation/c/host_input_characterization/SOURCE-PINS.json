@@ -1,0 +1,244 @@
+{
+  "source_commit": "5e2396cef8e57765c6a8fefe34fc379c3a60c163",
+  "upstream_source_files": [
+    {
+      "path": "ieee_cigre_dll/gfm_battery_app.c",
+      "sha256": "95ab8fc4ac07e30b087323805e4b2b423cb644199f5a340c1c503f71c947540f",
+      "git_blob_sha": "094b636430f642347b960a7b1607545f68386b3e"
+    },
+    {
+      "path": "c_language_library/gfm_essentials/machine_model_A/machine_model_A.c",
+      "sha256": "af0575544be1c1fcb459bb95fb311d5141b4c1e5434a08bdf894b0f04bfa5c8e",
+      "git_blob_sha": "9e123b4469d48258e22f0272a453b98baf0d60dd"
+    },
+    {
+      "path": "c_language_library/gfm_essentials/current_limiting_A/current_limiting_A.c",
+      "sha256": "d7fd538237390d3ffa8ea0b1425ad9db71815f44ebef0308f669fb238a588a0d",
+      "git_blob_sha": "716da0d4b736c0bbfcd99b3d5d6b92f0d8a8a038"
+    },
+    {
+      "path": "c_language_library/companion_algorithms/ac_monitor_A/ac_monitor_A.c",
+      "sha256": "044bd2c1ab36c089b4299302ea49eac61515c652563cb103d30ee3c67c271192",
+      "git_blob_sha": "07e66cb1d464f6139751bbb78926cdb49aaad824"
+    },
+    {
+      "path": "c_language_library/companion_algorithms/ac_checks_A/ac_checks_A.c",
+      "sha256": "ee5ea0b383de265ab67289bca4a9b125545ecc2f050d31f604ef5733c5624525",
+      "git_blob_sha": "319cfb6a2c395b8e0e18548c39871669bc902fd7"
+    },
+    {
+      "path": "c_language_library/companion_algorithms/current_source_A/current_source_A.c",
+      "sha256": "77d22a6338af1c28daf8ab32e89771a485208d194f3230e86d0c49df752bbf0b",
+      "git_blob_sha": "7876667ee207ea092e067e0624743c352b399a2a"
+    },
+    {
+      "path": "c_language_library/companion_algorithms/power_limiter_A/power_limiter_A.c",
+      "sha256": "618b0fc82e7f38bd692315fff32de9225f1365c27923f8d20036d5937b5482f1",
+      "git_blob_sha": "64fad0fcd1eefa96f4dbd868e36256cb5eba5333"
+    },
+    {
+      "path": "c_language_library/design_specific_examples/circuit_controls_B/circuit_controls_B.c",
+      "sha256": "e1a971092ba5b5af339d46637987b964ab7e74d0ca48b146ed42805a27615921",
+      "git_blob_sha": "f5fe82a06c940bb90a1d65b529c4880f29175b6c"
+    },
+    {
+      "path": "c_language_library/helper_lib/cmplx.c",
+      "sha256": "cc9bccb82321ac3c3f3009384d61e9e8a73fbeadd9193689d3e479376e9345b0",
+      "git_blob_sha": "34b13a2d018d930c3b9b43bb4c09bd8206e76367"
+    },
+    {
+      "path": "c_language_library/helper_lib/timers.c",
+      "sha256": "0a9145f9bc92db4271a78dc153d9c61a789f6ff191e34e1b89ef974e8312c2d6",
+      "git_blob_sha": "a54f32cf5be9b614daca408e96df4b7218aeacf2"
+    },
+    {
+      "path": "c_language_library/gfm_essentials/machine_model_A_schema.yaml",
+      "sha256": "6a1821f67843fcc0611791ba7c21bf44d18d13381ac60e1ed234db16c32cf854",
+      "git_blob_sha": "dac00d950634bc02abfa1bd06f85f9afe108757d"
+    },
+    {
+      "path": "c_language_library/gfm_essentials/current_limiting_A_schema.yaml",
+      "sha256": "d0556f368641c2d567fa3dc6e25b119f130f7200da0ba582b719afb61882d7d9",
+      "git_blob_sha": "3fe7a4160494c2754494703502e8047a18eac35e"
+    },
+    {
+      "path": "c_language_library/companion_algorithms/ac_monitor_A_schema.yaml",
+      "sha256": "ace0cfbb078ada38ba5483f73440b03f3db5a8474d6a32db2d2d9ab1a6d5a1e5",
+      "git_blob_sha": "b6d1892db8aaf78ee1a599bd07de325ef0401256"
+    },
+    {
+      "path": "c_language_library/companion_algorithms/ac_checks_A_schema.yaml",
+      "sha256": "0bbe0a2f03d9570a139129c49132fdff418c2a519b656a3e19c757aa27893871",
+      "git_blob_sha": "bdca3dd9f5aa7eb9722f66c4ae4f37eaa9a2df95"
+    },
+    {
+      "path": "c_language_library/companion_algorithms/current_source_A_schema.yaml",
+      "sha256": "9671c1cd16eb9184d31349e420d071dcb8e58e75f74c0b253e02ece314d19732",
+      "git_blob_sha": "67698f03dae0166820bbc2246c23f3259dacd57b"
+    },
+    {
+      "path": "c_language_library/companion_algorithms/power_limiter_A_schema.yaml",
+      "sha256": "2febac00166b99a4e12dab77ca3d10520293a587b4d8c66a8e9c03e0bb382531",
+      "git_blob_sha": "d0165d0201cca1e411ed7f1be281719e08fa65e3"
+    },
+    {
+      "path": "c_language_library/design_specific_examples/circuit_controls_B_schema.yaml",
+      "sha256": "e75e0e5e5d012c2f2f7bf3a53d8e10d055e806771cea8c2f71251a80f6cd377e",
+      "git_blob_sha": "eb9c5f94d4d55182d33ca267044e0eeb7a163dd0"
+    },
+    {
+      "path": "ieee_cigre_dll/gfm_battery_app.h",
+      "sha256": "56d5d52693fb087a7f6416dfb2dbd31051289a7dc983bdaac77224ba1f88b6fb",
+      "git_blob_sha": "aa095cc4594e404d0b7e43c6e126bac53d877369"
+    },
+    {
+      "path": "ieee_cigre_dll/IEEE_Cigre_DLLInterface.h",
+      "sha256": "3b85aa4372f30c0a291cbe786c2a01a4caeaa22e78cda54ce8e7a112a3822631",
+      "git_blob_sha": "56dd7d39dfa6dc51e645d5d1ef43230fa9e213cf"
+    },
+    {
+      "path": "ieee_cigre_dll/IEEE_Cigre_DLLInterface_types.h",
+      "sha256": "fed686063e1a021beb8aaae54cfdcaddccb34dc20743753d529e085f0f9b0a3e",
+      "git_blob_sha": "01a44a62ba6b849cc8bd9b33d47efbcdd54838bd"
+    },
+    {
+      "path": "ieee_cigre_dll/logging/signal_catalog.h",
+      "sha256": "27cf367965e660056939ba90c81119842b981fe32500692af5757c3ed72e867e",
+      "git_blob_sha": "bb7851f07841b80bcc2095541c6e74a6b3f83634"
+    },
+    {
+      "path": "ieee_cigre_dll/dll_config.yaml",
+      "sha256": "da405a52bf9d9d14271e6b9ddcc38a4863bf4fccc6f33fab22113c6179d474c1",
+      "git_blob_sha": "34a2d4c5f1d83e528812c492e9191f55db454f0f"
+    },
+    {
+      "path": "ieee_cigre_dll/debug_signals_config.yaml",
+      "sha256": "91a3f55fd4c98c6149af1a66885e90287eec4c21eebd9c447c5716a4e7feccf1",
+      "git_blob_sha": "218028827ac8032de09e40efaaf29b1ea40fa104"
+    },
+    {
+      "path": "ieee_cigre_dll/generate_dll_config.py",
+      "sha256": "252ce4aff11a960678df6f31f488faa7ff312e002eb16c228df5b6fc7b686ab9",
+      "git_blob_sha": "4811c516fe240eebcd700b5da71c52eea3d6fdeb"
+    },
+    {
+      "path": "ieee_cigre_dll/logging/generate_signal_catalog.py",
+      "sha256": "44f0213702e0c8f0711c0c88597b29075868ddfafe8000029855688aa91c506f",
+      "git_blob_sha": "8836159389e36b86e1de73cabdfeb42970655c01"
+    },
+    {
+      "path": "ieee_cigre_dll/logging/generate_extra_outputs.py",
+      "sha256": "f073833f4262c5937b910f6fa18a3a593b7d3329c09d715237809bcc66f76e36",
+      "git_blob_sha": "635ba982f196a2d695f30b36749d3e1a5743ba53"
+    },
+    {
+      "path": "schema_tools/generate_header.py",
+      "sha256": "c6e3ce9c80ba2136c2793df7ee474ed0cb980e7c26e06423d5d722f55dd13340",
+      "git_blob_sha": "07a027f07537260fec18ade1679007b53de11d0e"
+    },
+    {
+      "path": "schema_tools/schema_signal_utils.py",
+      "sha256": "10138ae1416d915f39daf9eed2e8b4ae0838aded287e74aabf6f74d8e550218b",
+      "git_blob_sha": "20667646f873a07d4734c7b5c8b8e718d77c788e"
+    },
+    {
+      "path": "c_language_library/helper_lib/cmplx.h",
+      "sha256": "fde5e6eac682eb0a219140a7855290d4de247b501de83800658e63ae9c623d4b",
+      "git_blob_sha": "ee2aa50aeff0d56937daaf370c8a42626d67d50b"
+    },
+    {
+      "path": "c_language_library/helper_lib/timers.h",
+      "sha256": "eb77478c49809d2728fc1b3766caeccf5159c58973d6e0911be24063ca6decdf",
+      "git_blob_sha": "f824c1bf99c90233d74f80af1ae47eda2b236c5c"
+    },
+    {
+      "path": "c_language_library/helper_lib/helper_macros.h",
+      "sha256": "7f09f6991b46490a312bcc44b5b143ffa9d16b0adde440095464f3aa5f07b1f0",
+      "git_blob_sha": "c8814f5af743395304c5d274d7f2f02f769f68c0"
+    },
+    {
+      "path": "c_language_library/helper_lib/common_types.h",
+      "sha256": "8228229a1cbc5056caa4207231396c9d464b692b0028757f1872ec40c5fa1fb0",
+      "git_blob_sha": "8ef944cc521b479d6b451980b1eb7d73af9da31c"
+    },
+    {
+      "path": "ieee_cigre_dll/gfm_battery_dll.c",
+      "sha256": "09f4f721e685d722692396b9f0e02c7a9372248446efa9bebdbf9bcd7df85e47",
+      "git_blob_sha": "186e21b2365a9fdfa0b76d7633e2dfe55c2e74d6"
+    }
+  ],
+  "generated_files": [
+    {
+      "path": "c_language_library/companion_algorithms/ac_checks_A/acChecks_A_autogen.h",
+      "sha256": "2876845a7c0d2b09241855cfb2fed9989b5b853c56a068ea6d12ee873bb839fb"
+    },
+    {
+      "path": "c_language_library/companion_algorithms/ac_checks_A/acChecks_A_private_autogen.h",
+      "sha256": "1cbc2eb815f4d6d803ba4457ee898cbbfbac36711ebe9f79b6cd4243992ef620"
+    },
+    {
+      "path": "c_language_library/companion_algorithms/ac_monitor_A/acMonitor_A_autogen.h",
+      "sha256": "6929eb6a3414fd8c4ed02913ed638d3da6255cff2c085413e9aea1ab79e82f50"
+    },
+    {
+      "path": "c_language_library/companion_algorithms/ac_monitor_A/acMonitor_A_private_autogen.h",
+      "sha256": "a6d597b124c5a5f529cf89ffe57dec8ef26b07def85c0e76dc4f2666b5d03e49"
+    },
+    {
+      "path": "c_language_library/companion_algorithms/current_source_A/currentSource_A_autogen.h",
+      "sha256": "6859a13a56c22cf689a59ef9fd125f45672438bd676f7cfa50860f45f10d81c8"
+    },
+    {
+      "path": "c_language_library/companion_algorithms/current_source_A/currentSource_A_private_autogen.h",
+      "sha256": "9771dda0d9137a75bf60c4b490ad04386db48d802aa6471820871e043ddb3467"
+    },
+    {
+      "path": "c_language_library/companion_algorithms/power_limiter_A/powerLimiter_A_autogen.h",
+      "sha256": "887d66f3371fef01588ed461bb644034c819c58263f31ac7a3c03ae131310d32"
+    },
+    {
+      "path": "c_language_library/companion_algorithms/power_limiter_A/powerLimiter_A_private_autogen.h",
+      "sha256": "dbf60e24cd6b9d7d9e4bbe5ecda4abed864bfbedf75b4dc28326f0fa70c6d4cf"
+    },
+    {
+      "path": "c_language_library/design_specific_examples/circuit_controls_B/circuitControls_B_autogen.h",
+      "sha256": "0801491416dbb212277048f07ca829bf44d189c36146be3785a5ba69934106ee"
+    },
+    {
+      "path": "c_language_library/design_specific_examples/circuit_controls_B/circuitControls_B_private_autogen.h",
+      "sha256": "3897a4a4feaec76d889286c10bea5f4750433dd0f1f98c21c098761929b95f8d"
+    },
+    {
+      "path": "c_language_library/gfm_essentials/current_limiting_A/currentLimiting_A_autogen.h",
+      "sha256": "6919ca2f99ac0994fb9842e09202e42871a0d0b3272f897fadb7a832271dd1a9"
+    },
+    {
+      "path": "c_language_library/gfm_essentials/current_limiting_A/currentLimiting_A_private_autogen.h",
+      "sha256": "690e949194a2247ef88274379d5a5805503bf11409abe94985c6e2974a2b2191"
+    },
+    {
+      "path": "c_language_library/gfm_essentials/machine_model_A/machineModel_A_autogen.h",
+      "sha256": "1878735e525042212a5b7211dd3cb868c839fad3984571efdb67ddd27afe53f2"
+    },
+    {
+      "path": "c_language_library/gfm_essentials/machine_model_A/machineModel_A_private_autogen.h",
+      "sha256": "c436e3f8c5db7522755301f80946e69e9edbcb36b5d715cb90d5cafb2348d247"
+    },
+    {
+      "path": "ieee_cigre_dll/logging/extra_outputs_autogen.h",
+      "sha256": "bb5c2ee9d9e8462c2fb48cf73ed6de1415f4a27b944a28644cf4a2352c16f95b"
+    },
+    {
+      "path": "ieee_cigre_dll/logging/signal_catalog_autogen.h",
+      "sha256": "af3170b339e8e1d0bcf32c240e96ecb7faf2c6c33f9f5a881a4eaee4f2818d89"
+    },
+    {
+      "path": "ieee_cigre_dll/dll_config_generated.h",
+      "sha256": "a4a5c5b349b886c58abb98ca320747a438eebb7a72243ea399e39eb1893c8085"
+    },
+    {
+      "path": "ieee_cigre_dll/logging/available_signals_autogen.txt",
+      "sha256": "5650a65ed0610719d87d29fe380e45685068112041beaa547156fb354ec39350"
+    }
+  ]
+}
