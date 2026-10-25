@@ -1,3 +1,4 @@
+/* Modified by Wattness, 2026: retain numeric phase-voltage extrema. */
 #include "acChecks_A_private_autogen.h"
 #include "../../helper_lib/helper_macros.h"
 
@@ -27,8 +28,8 @@ void acChecks_1kHz(float t_step)
     }
     float Vnve_mag_pu = cmplx_mag(acChecks_IN.Vnve) * derived_config.over_VllRated;
 
-    bool Vph_min_pu = fminf(Vph_pu[0], fminf(Vph_pu[1], Vph_pu[2]));
-    bool Vph_max_pu = fmaxf(Vph_pu[0], fmaxf(Vph_pu[1], Vph_pu[2]));
+    float Vph_min_pu = fminf(Vph_pu[0], fminf(Vph_pu[1], Vph_pu[2]));
+    float Vph_max_pu = fmaxf(Vph_pu[0], fmaxf(Vph_pu[1], Vph_pu[2]));
 
     float relative_frequency = acChecks_IN.freq - acChecks_GENERAL_CFG.nominalFrequency;
 
