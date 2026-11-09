@@ -27,8 +27,8 @@ void acChecks_1kHz(float t_step)
     }
     float Vnve_mag_pu = cmplx_mag(acChecks_IN.Vnve) * derived_config.over_VllRated;
 
-    bool Vph_min_pu = fminf(Vph_pu[0], fminf(Vph_pu[1], Vph_pu[2]));
-    bool Vph_max_pu = fmaxf(Vph_pu[0], fmaxf(Vph_pu[1], Vph_pu[2]));
+    float Vph_min_pu = fminf(Vph_pu[0], fminf(Vph_pu[1], Vph_pu[2]));
+    float Vph_max_pu = fmaxf(Vph_pu[0], fmaxf(Vph_pu[1], Vph_pu[2]));
 
     float relative_frequency = acChecks_IN.freq - acChecks_GENERAL_CFG.nominalFrequency;
 
@@ -119,6 +119,37 @@ void acChecks_1kHz(float t_step)
                    undervolt_trip1 || undervolt_trip2 || overvolt_trip1 || overvolt_trip2;
     acChecks_OUT.acOk = qualified && !tripped;
 
+    // Blackstart permissive (see issue #11)
+    //
+    // A dead bus can never satisfy the qualification above, so blackstart gets
+    // its own permissive. A rising edge of bsCmd is accepted only after the bus
+    // has been dead for tDeadBus. The trigger sets a latch that holds the
+    // permissive for tBlackstart, during which the inverter forms voltage and
+    // acOk gets the chance to qualify it. The latch is released when the window
+    // expires or an over-voltage trip occurs. After a release only a new rising
+    // edge can start blackstart again, so an OV that clears does not restart it.
+    static float dead_bus_timer = 0.0f;
+    static float blackstart_timer = 0.0f;
+    static bool bs_cmd_prev = false;
+    static bool blackstart_latch = false;
+
+    bool dead_bus = assert_timer( &dead_bus_timer, acChecks_BLACKSTART_CFG.tDeadBus, t_step,
+                                  Vph_max_pu <= acChecks_BLACKSTART_CFG.vDeadBus );
+
+    bool bs_trigger = acChecks_IN.bsCmd && !bs_cmd_prev && dead_bus;
+    bs_cmd_prev = acChecks_IN.bsCmd;
+
+    bool bs_trip = overvolt_trip1 || overvolt_trip2;
+    bool bs_set = bs_trigger || blackstart_latch;
+
+    bool bs_window_expired = assert_timer( &blackstart_timer, acChecks_BLACKSTART_CFG.tBlackstart, t_step,
+                                           bs_set && !bs_trip );
+
+    blackstart_latch = bs_set && !bs_trip && !bs_window_expired;
+
+    // Run permissive: qualified ac, or an open blackstart window
+    acChecks_OUT.enable = acChecks_OUT.acOk || blackstart_latch;
+
     // qualification state variables
     acChecks_QUALIFY_STATE.timer = qualifier_timer;
     acChecks_QUALIFY_STATE.freqInrange = frequency_inrange;
@@ -126,6 +157,11 @@ void acChecks_1kHz(float t_step)
         acChecks_QUALIFY_STATE.voltageInrange = voltage_inrange;
     }
     acChecks_QUALIFY_STATE.vimbalanceInrange = vimbalance_low;
+
+    // blackstart state
+    acChecks_BLACKSTART_STATE.deadBus = dead_bus;
+    acChecks_BLACKSTART_STATE.active = blackstart_latch;
+    acChecks_BLACKSTART_STATE.timer = blackstart_timer;
 
     // frequency trips
     acChecks_TRIP_STATE.underFrequency1State = underfreq_trip1;

@@ -27,6 +27,10 @@ IN:
             type: cmplx_t
             default: [0.0f, 0.0f]
             units: 'Volts'
+        bsCmd:
+            description: 'Blackstart command; a rising edge requests a blackstart attempt'
+            type: bool
+            default: false
 
 GENERAL_CFG:
     use: config_group
@@ -92,6 +96,26 @@ QUALIFY_CFG:
             type: float
             default: 5.0
             units: 'sec'
+BLACKSTART_CFG:
+    use: config_group
+    description: 'Blackstart permissive parameters'
+    signals:
+        vDeadBus:
+            description: 'Highest phase voltage at which the bus is considered dead (blackstart allowed)'
+            type: float
+            default: 0.1
+            units: 'pu'
+        tDeadBus:
+            description: 'Time the bus must stay dead before a blackstart command is accepted'
+            type: float
+            default: 1.0
+            units: 'sec'
+        tBlackstart:
+            description: 'Blackstart window. Keep it longer than QUALIFY_CFG.tRequalify (e.g. tRequalify + 1 s) so acOk can qualify the formed voltage before it closes. Set to 0 to disable blackstart'
+            type: float
+            default: 6.0
+            units: 'sec'
+
 TRIPS_CFG:
     use: config_group
     description: 'Trip settings for voltage and frequency'
@@ -190,6 +214,28 @@ OUT:
             description: 'ac is qualified ok'
             type: bool
             default: false
+        enable:
+            description: 'Inverter run permissive: acOk OR an active blackstart window'
+            type: bool
+            default: false
+
+BLACKSTART_STATE:
+    use: state_group
+    description: 'Status of the blackstart permissive'
+    signals:
+        deadBus:
+            description: 'Bus has been dead for at least tDeadBus'
+            type: bool
+            default: false
+        active:
+            description: 'Blackstart window is open (latched)'
+            type: bool
+            default: false
+        timer:
+            description: 'Time elapsed in the current blackstart window'
+            type: float
+            default: 0.0
+            units: 'sec'
 
 QUALIFY_STATE:
     use: state_group
