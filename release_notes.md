@@ -1,3 +1,11 @@
+## Unreleased
+
+### Elements modified
+#### Companion Algorithms
+- ac_checks_A: added a blackstart permissive (new input `bsCmd`, config group `BLACKSTART_CFG`, outputs `enable`, state group `BLACKSTART_STATE`).  `acOk` is unchanged; `enable` = `acOk` OR an open blackstart window.
+- ac_checks_A: phase voltage extrema are now `float` (they were `bool`, which kept voltage trips from ever asserting).
+- Added host-side tests in `c_language_library/tests/ac_checks_A` (`python run_tests.py`).
+
 ## Release 1.1
 
 Added infrastructure for IEEE/CIGRE-compliant DLLs.  This generates a code-based model portable to different commercial modeling softwares including PSCAD.
